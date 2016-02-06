@@ -1,22 +1,4 @@
 
-class private_t
-{
-  int foo()
-  {
-    return 42;
-  }
-  int foo( char * )
-  {
-    return 13;
-  }
-  void foo( char *, int )
-  {
-  }
-
-  int bar = 100500;
-  void * mo;
-};
-
 namespace utils
 {
   inline namespace access
@@ -49,16 +31,41 @@ namespace utils
   }
 }
 
-struct T1
+#define DECLARE_PRIVATE_PTR( class, member, signature )                     \
+struct class##_##member { using type = signature; };                        \
+template struct utils::private_ptr_init_t<class##_##member, &class::member>;
+
+#define CALL_PRIVATE_PTR( instance, class, member )                         \
+((instance).*utils::access::private_ptr_t<class##_##member>::value)
+
+
+class private_t
 {
-  using type = int( private_t::* );
+  int foo()
+  {
+    return 42;
+  }
+  int foo( char * )
+  {
+    return 13;
+  }
+  void foo( char *, int )
+  {
+  }
+
+  int bar = 100500;
+  void * mo;
 };
-template struct utils::private_ptr_init_t<T1, &private_t::bar>;
+
+
+DECLARE_PRIVATE_PTR( private_t, bar, int( private_t::* ) )
+DECLARE_PRIVATE_PTR( private_t, mo, void *(private_t::*) )
+//DECLARE_PRIVATE_PTR( private_t, foo, int (private_t::*)(char *) )
 
 int main( int argc, char * argv [] )
 {
   private_t p;
-  int i = p.*utils::access::private_ptr_t<T1>::value;
+  int i = CALL_PRIVATE_PTR( p, private_t, bar );
 
   return 0;
 }
