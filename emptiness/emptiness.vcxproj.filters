@@ -21,12 +21,18 @@
     <ClCompile Include="emptiness_pch.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="folder_monitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="emptiness_pch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="folder_monitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
