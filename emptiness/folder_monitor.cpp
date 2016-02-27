@@ -7,6 +7,14 @@
 
 namespace sys
 {
+
+  folder_monitor::folder_monitor( const std::wstring & folder, callback_t callback )
+  {
+    set_folder( folder );
+    set_callback( std::move( callback ) );
+  }
+
+
   folder_monitor::~folder_monitor()
   {
     stop();
@@ -19,8 +27,8 @@ namespace sys
       std::thread( [this]
     {
       _alive = true;
-      _handles [0] = ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
-      _handles [1] = ::FindFirstChangeNotificationW( _folder.c_str(), true, FILE_NOTIFY_CHANGE_LAST_WRITE );
+      _event_handles [stop_event] = ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
+      _event_handles [change_event] = ::FindFirstChangeNotificationW( _folder.c_str(), true, FILE_NOTIFY_CHANGE_LAST_WRITE );
       do_work();
       _alive = false;
     } ).detach();
@@ -29,30 +37,37 @@ namespace sys
 
   void folder_monitor::start( const std::wstring & folder )
   {
-    _folder = folder;
+    set_folder( folder );
     start();
   }
 
 
   void folder_monitor::set_callback( callback_t callback )
   {
-    _callback = std::make_shared<callback_t>( std::move( callback ) );
+    _callback = std::move( callback );
+  }
+
+
+  void folder_monitor::set_folder( const std::wstring & folder )
+  {
+    _folder = folder;
   }
 
 
   void folder_monitor::stop()
   {
     while (_alive)
-      ::SetEvent( _handles [0] );
+      ::SetEvent( _event_handles [stop_event] );
 
     if (_alive)
-      for (auto && handle : _handles)
+      for (auto && handle : _event_handles)
         ::CloseHandle( handle );
   }
 
 
   void folder_monitor::do_work()
   {
+
     bool stop = false;
     using namespace std::chrono;
 
@@ -60,7 +75,7 @@ namespace sys
 
     while (_alive && stop == false)
     {
-      auto wait_result = ::WaitForMultipleObjects( (DWORD)std::size( _handles ), _handles, FALSE, INFINITE );
+      auto wait_result = ::WaitForMultipleObjects( (DWORD)std::size( _event_handles ), _event_handles, FALSE, INFINITE );
 
       switch (wait_result)
       {
@@ -72,26 +87,14 @@ namespace sys
         }
         case WAIT_OBJECT_0 + 1:
         {
-
-          auto now = high_resolution_clock::now();
-          auto elapsed = duration_cast<duration<double>>(now - past).count();
+          const auto now = high_resolution_clock::now();
+          const auto elapsed = duration_cast<duration<double>>(now - past).count();
           past = now;
 
           if (elapsed > 0.01)
-          {
-            std::cout << "event" << "\n";
-            std::cout << elapsed << "\n";
+            notify( elapsed );
 
-            uint8_t buffer [2048] = {};
-            DWORD n_bytes = 0;
-            ::ReadDirectoryChangesW( _handles [1], buffer, (DWORD)std::size( buffer ), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
-            FILE_NOTIFY_INFORMATION & info = *(FILE_NOTIFY_INFORMATION*)&buffer;
-
-            if (_callback && *_callback)
-              (*_callback)(info.FileName);
-          }
-
-          ::FindNextChangeNotification( _handles [1] );
+          ::FindNextChangeNotification( _event_handles [change_event] );
 
           break;
         }
@@ -105,6 +108,21 @@ namespace sys
           break;
       }
     }
+  }
+
+
+  void folder_monitor::notify( double elapsed )
+  {
+    std::cout << "event" << "\n";
+    std::cout << elapsed << "\n";
+
+    uint8_t buffer [2048] = {};
+    DWORD n_bytes = 0;
+    ::ReadDirectoryChangesW( _event_handles [change_event], buffer, (DWORD)std::size( buffer ), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
+    FILE_NOTIFY_INFORMATION & info = *(FILE_NOTIFY_INFORMATION*)&buffer;
+
+    if (_callback)
+      (_callback)(info.FileName);
   }
 
 }

@@ -14,24 +14,31 @@ namespace sys {
     using callback_t = std::function<void( const std::wstring & )>;
 
   private:
+    enum events_t
+    {
+      stop_event, change_event, events_count
+    };
+
     std::wstring _folder;
-    void * _handles [2] = {};
+    void * _event_handles [events_count] = {};
 
-    std::shared_ptr<callback_t> _callback;
+    callback_t _callback;
     std::atomic_bool _alive = false;
-
-
-  private:
-    void do_work();
 
   public:
     folder_monitor() = default;
+    folder_monitor( const std::wstring & folder, callback_t callback );
     ~folder_monitor();
 
     void start();
-    void start( const std::wstring & folder );
-    void set_callback( callback_t callback );
     void stop();
+
+  private:
+    void set_callback( callback_t callback );
+    void set_folder( const std::wstring & folder );
+    void start( const std::wstring & folder );
+    void do_work();
+    void notify( double elapsed );
   };
 
 }

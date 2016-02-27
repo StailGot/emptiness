@@ -40,28 +40,14 @@ int main( int argc, char * argv [] )
   //}
 
 
-  sys::folder_monitor folder_monitor;
-  folder_monitor.set_callback(
+  sys::folder_monitor folder_monitor(
+    L"C:/dev/",
     [] ( const std::wstring & file )
   {
     std::wcout << file << "\n";
   } );
-  folder_monitor.start( L"C:/dev/" );
-
-
-  folder_monitor.stop();
-  folder_monitor.stop();
-  folder_monitor.stop();
 
   folder_monitor.start();
-  folder_monitor.start();
-  folder_monitor.start();
-
-  folder_monitor.stop();
-  folder_monitor.stop();
-
-  folder_monitor.start();
-
 
   while (true);
 
