@@ -6,7 +6,8 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeaderFile>$(ProjectName)_pch.hpp</PrecompiledHeaderFile>
-      <ForcedIncludeFiles>%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles>
+      </ForcedIncludeFiles>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

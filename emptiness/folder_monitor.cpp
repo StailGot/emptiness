@@ -1,9 +1,12 @@
 #include "folder_monitor.h"
 
+#include <iostream>
+
 #include <thread>
 #include <chrono>
 #include <filesystem>
 #include <windows.h>
+
 
 namespace sys
 {
@@ -113,8 +116,8 @@ namespace sys
 
   void folder_monitor::notify( double elapsed )
   {
-    std::cout << "event" << "\n";
-    std::cout << elapsed << "\n";
+    //std::cout << "event" << "\n";
+    //std::cout << elapsed << "\n";
 
     uint8_t buffer [2048] = {};
     DWORD n_bytes = 0;

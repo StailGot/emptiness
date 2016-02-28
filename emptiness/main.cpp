@@ -3,53 +3,59 @@
 #include <SFML/Window.hpp>
 
 #include <iostream>
+#include <concurrent_queue.h>
+#include <boost/timer/timer.hpp>
 
-#include "folder_monitor.h"
+//#include "folder_monitor.h"
 
 
 int main( int argc, char * argv [] )
 {
-  //sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
-  //::glewInit();
+  concurrency::concurrent_queue<std::wstring> events;
 
-  //auto render =
-  //  []
+  //sys::folder_monitor folder_monitor(
+  //  L"C:/dev/",
+  //  [&] ( const std::wstring & file )
   //{
-  //  GLfloat color [] = { 0.3f, 0.f, 0.f, 0.f };
-  //  ::glClearBufferfv( GL_COLOR, 0, color );
+  //  events.push( file );
+  //} );
 
-  //  ::glBegin( GL_TRIANGLES );
-  //  ::glColor3f( 0.128f, 0.0f, 0.255f );
-  //  ::glVertex2f( 0, 0 );
-  //  ::glColor3f( 0.0f, 0.128f, 0.255f );
-  //  ::glVertex2f( 1, 0 );
-  //  ::glColor3f( 0.0f, 0.128f, 0.255f );
-  //  ::glVertex2f( 0, 1 );
-  //  ::glEnd();
-
-  //};
-
-  //while (window.isOpen())
-  //{
-  //  sf::Event e {};
-  //  while (window.pollEvent( e ))
-  //    if (e.type == sf::Event::EventType::Closed)
-  //      window.close();
-  //    else
-  //      render(), window.display();
-  //}
+  //folder_monitor.start();
 
 
-  sys::folder_monitor folder_monitor(
-    L"C:/dev/",
-    [] ( const std::wstring & file )
+  sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
+  ::glewInit();
+
+  auto render =
+    []
   {
-    std::wcout << file << "\n";
-  } );
+    GLfloat color [] = { 0.3f, 0.f, 0.f, 0.f };
+    ::glClearBufferfv( GL_COLOR, 0, color );
 
-  folder_monitor.start();
+    ::glBegin( GL_TRIANGLES );
+    ::glColor3f( 0.128f, 0.0f, 0.255f );
+    ::glVertex2f( 0, 0 );
+    ::glColor3f( 0.0f, 0.128f, 0.255f );
+    ::glVertex2f( 1, 0 );
+    ::glColor3f( 0.0f, 0.128f, 0.255f );
+    ::glVertex2f( 0, 1 );
+    ::glEnd();
+  };
 
-  while (true);
+  while (window.isOpen())
+  {
+    std::wstring ee;
+
+    while (events.try_pop( ee ))
+      std::wcout << "events : " << ee << "\n";
+
+    sf::Event e {};
+    while (window.pollEvent( e ))
+      if (e.type == sf::Event::EventType::Closed)
+        window.close(), exit( EXIT_SUCCESS );
+      else
+        render(), window.display();
+  }
 
   return 0;
 }

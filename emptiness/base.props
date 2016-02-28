@@ -10,6 +10,9 @@
     <BuildLog>
       <Path>$(SolutionDir)\out\$(Configuration)\$(Platform)\obj\$(ProjectName)\$(MSBuildProjectName).log</Path>
     </BuildLog>
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
