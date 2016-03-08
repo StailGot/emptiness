@@ -20,13 +20,13 @@ namespace sys {
     };
 
     std::wstring _folder;
-    void * _event_handles [events_count] = {};
+    void * _events_handles [events_count] = {};
 
     callback_t _callback;
     std::atomic_bool _alive = false;
 
   public:
-    folder_monitor() = default;
+    folder_monitor() = delete;
     folder_monitor( const std::wstring & folder, callback_t callback );
     ~folder_monitor();
 

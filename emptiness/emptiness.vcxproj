@@ -188,6 +188,7 @@
     <Import Project="..\packages\boost_timer.1.60.0.0\build\native\boost_timer.targets" Condition="Exists('..\packages\boost_timer.1.60.0.0\build\native\boost_timer.targets')" />
     <Import Project="..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" />
     <Import Project="..\packages\boost_system.1.60.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" />
+    <Import Project="..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets" Condition="Exists('..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -203,5 +204,6 @@
     <Error Condition="!Exists('..\packages\boost_timer.1.60.0.0\build\native\boost_timer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_timer.1.60.0.0\build\native\boost_timer.targets'))" />
     <Error Condition="!Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets'))" />
     <Error Condition="!Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system.1.60.0.0\build\native\boost_system.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets'))" />
   </Target>
 </Project>

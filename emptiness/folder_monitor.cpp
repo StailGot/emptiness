@@ -30,8 +30,8 @@ namespace sys
       std::thread( [this]
     {
       _alive = true;
-      _event_handles [stop_event] = ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
-      _event_handles [change_event] = ::FindFirstChangeNotificationW( _folder.c_str(), true, FILE_NOTIFY_CHANGE_LAST_WRITE );
+      _events_handles [stop_event] = ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
+      _events_handles [change_event] = ::FindFirstChangeNotificationW( _folder.c_str(), true, FILE_NOTIFY_CHANGE_LAST_WRITE );
       do_work();
       _alive = false;
     } ).detach();
@@ -60,10 +60,10 @@ namespace sys
   void folder_monitor::stop()
   {
     while (_alive)
-      ::SetEvent( _event_handles [stop_event] );
+      ::SetEvent( _events_handles [stop_event] );
 
     if (_alive)
-      for (auto && handle : _event_handles)
+      for (auto && handle : _events_handles)
         ::CloseHandle( handle );
   }
 
@@ -78,7 +78,7 @@ namespace sys
 
     while (_alive && stop == false)
     {
-      auto wait_result = ::WaitForMultipleObjects( (DWORD)std::size( _event_handles ), _event_handles, FALSE, INFINITE );
+      auto wait_result = ::WaitForMultipleObjects( (DWORD)std::size( _events_handles ), _events_handles, FALSE, INFINITE );
 
       switch (wait_result)
       {
@@ -97,7 +97,7 @@ namespace sys
           if (elapsed > 0.01)
             notify( elapsed );
 
-          ::FindNextChangeNotification( _event_handles [change_event] );
+          ::FindNextChangeNotification( _events_handles [change_event] );
 
           break;
         }
@@ -121,7 +121,7 @@ namespace sys
 
     uint8_t buffer [2048] = {};
     DWORD n_bytes = 0;
-    ::ReadDirectoryChangesW( _event_handles [change_event], buffer, (DWORD)std::size( buffer ), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
+    ::ReadDirectoryChangesW( _events_handles [change_event], buffer, (DWORD)std::size( buffer ), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
     FILE_NOTIFY_INFORMATION & info = *(FILE_NOTIFY_INFORMATION*)&buffer;
 
     if (_callback)
