@@ -12,7 +12,8 @@
 #include <future>
 #include <thread>
 
-#include "folder_monitor.h"
+#include "folder_monitor.hpp"
+#include "gl_utils.hpp"
 
 
 int main( int argc, char * argv [] )
@@ -28,9 +29,10 @@ int main( int argc, char * argv [] )
 
   folder_monitor.start();
 
-
   sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
   ::glewInit();
+
+  gl::create_program( { gl::create_shader( "* void main() {}", GL_VERTEX_SHADER, &std::clog ) }, &std::clog );
 
   auto render =
     []
@@ -61,7 +63,6 @@ int main( int argc, char * argv [] )
     while (window.pollEvent( e ))
       if (e.type == sf::Event::EventType::Closed)
         window.close();
-    //else
     render(), window.display();
   }
 

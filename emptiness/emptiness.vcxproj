@@ -174,7 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="emptiness_pch.hpp" />
-    <ClInclude Include="folder_monitor.h" />
+    <ClInclude Include="folder_monitor.hpp" />
+    <ClInclude Include="gl_utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
