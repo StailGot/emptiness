@@ -5,23 +5,26 @@
 #include <gsl.h>
 #include <concurrent_queue.h>
 #include <boost/timer/timer.hpp>
-#include <boost/range/algorithm/fill.hpp>
-#include <boost/range/iterator_range.hpp>
+#include <filesystem>
 
-#include <iostream>
-#include <future>
-#include <thread>
 
 #include "folder_monitor.hpp"
 #include "gl_utils.hpp"
-
+#include "system_utils.hpp"
+#include "options.hpp"
 
 int main( int argc, char * argv [] )
 {
   concurrency::concurrent_queue<std::wstring> events;
 
+  std::string shaders_path = options::parse_options( argc, argv, "shaders" );
+  GLuint program {};
+
+  sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
+  ::glewInit();
+
   sys::folder_monitor folder_monitor(
-    L"C:/dev/",
+    std::tr2::sys::path( shaders_path ),
     [&] ( const std::wstring & file )
   {
     events.push( file );
@@ -29,15 +32,11 @@ int main( int argc, char * argv [] )
 
   folder_monitor.start();
 
-  sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
-  ::glewInit();
-
-  gl::create_program( { gl::create_shader( "* void main() {}", GL_VERTEX_SHADER, &std::clog ) }, &std::clog );
 
   auto render =
     []
   {
-    boost::timer::auto_cpu_timer timer;
+    //boost::timer::auto_cpu_timer timer;
 
     GLfloat color [] = { 0.3f, 0.f, 0.f, 0.f };
     ::glClearBufferfv( GL_COLOR, 0, color );
@@ -57,7 +56,12 @@ int main( int argc, char * argv [] )
     std::wstring ee;
 
     while (events.try_pop( ee ))
-      std::wcout << "events : " << ee << "\n";
+    {
+      ::glDeleteProgram( program );
+      program = gl::create_program( gl::load_shaders( shaders_path ), &std::clog );
+      //std::wcout << "events : " << ee << "\n";
+      //std::cout << program << "\n";
+    }
 
     sf::Event e {};
     while (window.pollEvent( e ))

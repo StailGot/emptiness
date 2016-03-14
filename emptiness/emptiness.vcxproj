@@ -162,11 +162,29 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="gl_utils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="options.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="system_utils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +194,11 @@
     <ClInclude Include="emptiness_pch.hpp" />
     <ClInclude Include="folder_monitor.hpp" />
     <ClInclude Include="gl_utils.hpp" />
+    <ClInclude Include="options.hpp" />
+    <ClInclude Include="system_utils.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="shaders\shaders.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -190,6 +213,7 @@
     <Import Project="..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" />
     <Import Project="..\packages\boost_system.1.60.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" />
     <Import Project="..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets" Condition="Exists('..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets')" />
+    <Import Project="..\packages\boost_program_options.1.60.0.0\build\native\boost_program_options.targets" Condition="Exists('..\packages\boost_program_options.1.60.0.0\build\native\boost_program_options.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -206,5 +230,6 @@
     <Error Condition="!Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets'))" />
     <Error Condition="!Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system.1.60.0.0\build\native\boost_system.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Gsl.0.1.1.0\build\native\Microsoft.Gsl.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_program_options.1.60.0.0\build\native\boost_program_options.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options.1.60.0.0\build\native\boost_program_options.targets'))" />
   </Target>
 </Project>
