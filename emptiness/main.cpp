@@ -3,6 +3,10 @@
 #include <SFML/Window.hpp>
 
 #include <gsl.h>
+#include <glm\common.hpp>
+#include <glm\gtc\type_ptr.hpp>
+
+
 #include <concurrent_queue.h>
 #include <boost/timer/timer.hpp>
 #include <filesystem>
@@ -16,9 +20,7 @@
 int main( int argc, char * argv [] )
 {
   concurrency::concurrent_queue<std::wstring> events;
-
   std::string shaders_path = options::parse_options( argc, argv, "shaders" );
-  GLuint program {};
 
   sf::Window window { sf::VideoMode( 700, 700 ), "opengl window" };
   ::glewInit();
@@ -32,24 +34,48 @@ int main( int argc, char * argv [] )
 
   folder_monitor.start();
 
+  GLuint program = gl::create_program( gl::load_shaders( shaders_path ), &std::clog );
+  glm::vec2 viewport { 700, 700 };
+  glm::vec2 mouse;
+
+
+  auto init =
+    []
+  {
+    ::glEnable( GL_DEPTH_TEST );
+    ::glEnable( GL_PROGRAM_POINT_SIZE );
+  };
+
+  boost::timer::auto_cpu_timer timer;
 
   auto render =
-    []
+    [&program, &viewport, &timer, &mouse]
   {
     //boost::timer::auto_cpu_timer timer;
 
-    GLfloat color [] = { 0.3f, 0.f, 0.f, 0.f };
+    GLfloat color [] = { 0.85f, 0.85f, 0.85f, 0.f };
     ::glClearBufferfv( GL_COLOR, 0, color );
 
-    ::glBegin( GL_TRIANGLES );
-    ::glColor3f( 0.128f, 0.0f, 0.255f );
+    GLfloat one [] = { 1.f, 1.f, 1.f, 1.f };
+    ::glClearBufferfv( GL_DEPTH, 0, one );
+
+    ::glUseProgram( program );
+    ::glUniform2fv( ::glGetUniformLocation( program, "viewport" ), 1, glm::value_ptr( viewport ) );
+    ::glUniform2fv( ::glGetUniformLocation( program, "mouse" ), 1, glm::value_ptr( mouse ) );
+
+
+    const double sec = 1000000000.0L;
+    const float elapsed = float( double( timer.elapsed().wall ) / sec );
+
+    ::glUniform1fv( ::glGetUniformLocation( program, "time" ), 1, &elapsed );
+
+
+    ::glBegin( GL_POINTS );
     ::glVertex2f( 0, 0 );
-    ::glColor3f( 0.0f, 0.128f, 0.255f );
-    ::glVertex2f( 1, 0 );
-    ::glColor3f( 0.0f, 0.128f, 0.255f );
-    ::glVertex2f( 0, 1 );
     ::glEnd();
   };
+
+  init();
 
   while (window.isOpen())
   {
@@ -59,14 +85,20 @@ int main( int argc, char * argv [] )
     {
       ::glDeleteProgram( program );
       program = gl::create_program( gl::load_shaders( shaders_path ), &std::clog );
-      //std::wcout << "events : " << ee << "\n";
-      //std::cout << program << "\n";
     }
 
     sf::Event e {};
     while (window.pollEvent( e ))
       if (e.type == sf::Event::EventType::Closed)
         window.close();
+      else
+        if (e.type == sf::Event::EventType::Resized)
+          (viewport = { e.size.width, e.size.height })
+          , ::glViewport( 0, 0, (GLsizei)viewport.x, (GLsizei)viewport.y );
+        else
+          if (e.type == sf::Event::EventType::MouseMoved)
+            mouse = { (float) e.mouseMove.x, e.mouseMove.y };
+
     render(), window.display();
   }
 
