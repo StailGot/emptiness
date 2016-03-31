@@ -7,6 +7,7 @@
 
 namespace functional
 {
+  // carrying
   template<template <typename...> class Fun, typename ...Args>
   struct carry
   {
