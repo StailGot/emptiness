@@ -5,50 +5,88 @@
 #include <vector>
 
 
-template<template <typename...> class Fun, typename ...Args>
-struct carry
+namespace functional
 {
-  template<typename ... Rest>
-  using type = Fun< Args ..., Rest... >;
-};
+  template<template <typename...> class Fun, typename ...Args>
+  struct carry
+  {
+    template<typename ... Rest>
+    using type = Fun< Args ..., Rest... >;
+  };
 
-template<typename Fun, typename Args>
-struct map;
+  namespace detail
+  {
+    // map
+    template<typename Fun, typename Args>
+    struct __map;
 
-template<typename Fun, template <typename...> class List, typename ... Args >
-struct map< Fun, List<Args...> >
+    template<typename Fun, template <typename...> class List, typename ... Args >
+    struct __map< Fun, List<Args...> >
+    {
+      using type = std::tuple < typename Fun:: template type<Args> ... >;
+    };
+
+    // reduce
+    template<typename Fun, typename Args>
+    struct __reduce;
+
+    template<typename Fun, template <typename...> class List, typename ... Args >
+    struct __reduce< Fun, List<Args...> >
+    {
+      using type = typename Fun:: template type < Args ... >;
+    };
+  }
+
+  // map
+  template<typename Fun, typename Args>
+  using map_t = typename detail::__map< Fun, Args >::type;
+
+  // reduce
+  template<typename Fun, typename Args>
+  using reduce_t = typename detail::__reduce< Fun, Args >::type;
+}
+
+namespace predicate
 {
-  using type = std::tuple < typename Fun:: template type<Args> ... >;
-};
+  namespace fn = functional;
 
-template<typename Fun, typename Args>
-using map_t = typename map< Fun, Args >::type;
+  template<typename T, typename Args>
+  using any_of = fn::reduce_t< fn::carry<std::disjunction>, fn::map_t< fn::carry< std::is_same, T>, Args> >;
 
-template<typename Fun, typename Args>
-struct reduce;
+  template<typename T, typename Args>
+  using all_of = fn::reduce_t< fn::carry<std::conjunction>, fn::map_t< fn::carry< std::is_same, T>, Args> >;
 
-template<typename Fun, template <typename...> class List, typename ... Args >
-struct reduce< Fun, List<Args...> >
-{
-  using type = typename Fun:: template type < Args ... >;
-};
+  template<typename T, typename Args>
+  constexpr auto any_of_v = any_of< T, Args >::value;
 
-template<typename Fun, typename Args>
-using reduce_t = typename reduce< Fun, Args >::type;
-
-template<typename T, typename Args>
-using any_of = reduce_t< carry<std::disjunction>, map_t< carry< std::is_same, T>, Args> >;
-
-template<typename T, typename Args>
-using all_of = reduce_t< carry<std::conjunction>, map_t< carry< std::is_same, T>, Args> >;
-
+  template<typename T, typename Args>
+  constexpr auto all_of_v = all_of< T, Args >::value;
+}
 
 int main( int argc, char * argv [] )
 {
-  std::cout << std::boolalpha;
+  //tests
+  using namespace predicate;
+  static_assert(any_of_v<int, std::tuple<char, void, int>>, "any_of fail");
+  static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
 
-  std::cout << any_of < int, std::tuple<char, void, int >> ::value << "\n";
-  std::cout << all_of < int, std::tuple<int, int, int >> ::value << "\n";
+  static_assert(all_of_v<int, std::tuple<int, char, int>> == false, "all_of fail");
+  static_assert(any_of_v<double, std::tuple<char, void, int>> == false, "any_of fail");
+
+  static_assert(any_of_v<double, std::tuple<>> == false, "any_of fail");
+  static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
+
+  static_assert(all_of_v<int, std::tuple<char>> == false, "all_of fail");
+  static_assert(all_of_v<void, std::tuple<void>>, "all_of fail");
+
+  static_assert(any_of_v<double, std::tuple<double>>, "any_of fail");
+  static_assert(any_of_v<double, std::tuple<void, void, void, void, double>>, "any_of fail");
+
+  static_assert(any_of_v<double, std::tuple<double, void, double, void, double>>, "any_of fail");
+
+  std::cout << std::boolalpha;
+  std::cout << any_of_v<int, std::tuple<char, void, int>> << "\n"; // true
+  std::cout << all_of_v<int, std::tuple<int, int, int>> << "\n"; // true
 
   return 0;
 }
