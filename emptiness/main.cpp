@@ -73,6 +73,9 @@ int main( int argc, char * argv [] )
 {
   //tests
   using namespace predicate;
+  using containers::list_t;
+  std::cout << std::boolalpha;
+
   static_assert(any_of_v<int, std::tuple<char, void, int>>, "any_of fail");
   static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
   static_assert(all_of_v<int, std::tuple<int, char, int>> == false, "all_of fail");
@@ -85,13 +88,11 @@ int main( int argc, char * argv [] )
   static_assert(any_of_v<double, std::tuple<void, void, void, void, double>>, "any_of fail");
   static_assert(any_of_v<double, std::tuple<double, void, double, void, double>>, "any_of fail");
 
-  using containers::list_t;
   static_assert(any_of_v<double, list_t<void, void, void, void, double>>, "any_of fail");
   static_assert(any_of_v<double, list_t<double>>, "any_of fail");
   static_assert(any_of_v<double, list_t<char, void, int>> == false, "any_of fail");
   static_assert(any_of_v<int, list_t<char, void, int>>, "any_of fail");
 
-  std::cout << std::boolalpha;
   std::cout << any_of_v<int, std::tuple<char, void, int>> << "\n"; // true
   std::cout << all_of_v<int, list_t<int, int, int>> << "\n"; // true
 
