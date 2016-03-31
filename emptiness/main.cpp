@@ -24,7 +24,7 @@ namespace functional
     template<typename Fun, template <typename...> class List, typename ... Args >
     struct __map< Fun, List<Args...> >
     {
-      using type = std::tuple < typename Fun:: template type<Args> ... >;
+      using type = List < typename Fun:: template type<Args> ... >;
     };
 
     // reduce
