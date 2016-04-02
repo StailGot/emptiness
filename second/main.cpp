@@ -1,4 +1,5 @@
 #define EXTERN __declspec(dllimport)
+//#define EXTERN
 
 template <typename T> struct EXTERN A
 {

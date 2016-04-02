@@ -6,7 +6,6 @@
 const auto pi = acos( -1 );
 auto on_init = [] {std::cout.precision( std::numeric_limits<long double>::digits ); return 0; }();
 
-
 template <typename T> struct EXTERN A
 {
   T foo();
