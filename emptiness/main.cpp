@@ -24,11 +24,11 @@ inline T A<T>::foo()
   return T( pi );
 }
 
-//template<>
-//inline double A<double>::foo()
-//{
-//  return double( pi );
-//}
+template<>
+inline double A<double>::foo()
+{
+  return double( pi * 2 );
+}
 //
 //template<>
 //inline float A<float>::foo()
