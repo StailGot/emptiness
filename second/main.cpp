@@ -1,6 +1,6 @@
 #define EXTERN __declspec(dllimport)
 
-template <typename T> struct  A
+template <typename T> struct EXTERN A
 {
   T foo();
   void print( T v );
@@ -12,7 +12,7 @@ int main( int argc, char * argv [] )
   A<double> d;
   A<float> f;
 
-  //a.print( a.foo() );
+  a.print( a.foo() );
   d.print( d.foo() );
   f.print( f.foo() );
 
