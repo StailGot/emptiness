@@ -91,7 +91,7 @@ namespace sys
         case WAIT_OBJECT_0:
         {
           stop = true;
-          std::cout << "stop event" << "\n";
+          //std::cout << "stop event" << "\n";
           break;
         }
         case WAIT_OBJECT_0 + 1:
@@ -111,7 +111,7 @@ namespace sys
         case WAIT_FAILED:
         case WAIT_TIMEOUT:
           stop = true;
-          std::cout << "wait fail" << "\n";
+          //std::cout << "wait fail" << "\n";
           break;
         default:
           break;
