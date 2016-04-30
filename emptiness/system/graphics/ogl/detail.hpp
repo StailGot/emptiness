@@ -6,9 +6,9 @@
 namespace sys { namespace graphics {  namespace ogl {
 
   namespace detail{
-  auto create_context()
+  auto create_context( void * system_window_handle )
   {
-    auto hdc = ::GetDC( {} );
+    auto hdc = ::GetDC( (HWND)system_window_handle );
 
     PIXELFORMATDESCRIPTOR pfd {};
     ::SetPixelFormat( hdc, ::ChoosePixelFormat( hdc, &pfd ), &pfd );

@@ -37,6 +37,12 @@
     <Filter Include="Source Files\system\graphics\ogl\details">
       <UniqueIdentifier>{c270c7d7-7f2e-4295-852e-baa73e1640b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\system\graphics\window">
+      <UniqueIdentifier>{d47a288e-61ca-4613-b5e6-dac2175a025a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system\graphics\window\details">
+      <UniqueIdentifier>{59d4c222-d137-4630-a137-fe1d07a48be7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,6 +120,9 @@
     <ClCompile Include="system\graphics\ogl\ogl.cpp">
       <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
+    <ClCompile Include="system\graphics\window\window.cpp">
+      <Filter>Source Files\system\graphics\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -142,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="system\graphics\ogl\detail.hpp">
       <Filter>Source Files\system\graphics\ogl\details</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\window\window.hpp">
+      <Filter>Source Files\system\graphics\window</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\window\detail\detail.hpp">
+      <Filter>Source Files\system\graphics\window\details</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

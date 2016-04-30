@@ -20,6 +20,8 @@ namespace sys { namespace graphics {  namespace ogl {
 
     that & make_current () override;
     that & create       () override;
+    that & create       ( void * system_window_handle ) override;
+
     that & destroy      () override;
     that & flush        () override;
     that & swap_buffers () override;
@@ -37,8 +39,13 @@ namespace sys { namespace graphics {  namespace ogl {
 
   gl_contex::that & gl_contex::create()
   {
-    return 
-      std::tie(_hdc, _hglrc) = detail::create_context()
+    return create({});
+  }
+
+  gl_contex::that & gl_contex::create( void * system_window_handle )
+  {
+    return
+      std::tie( _hdc, _hglrc ) = detail::create_context( system_window_handle )
       , *this;
   }
 

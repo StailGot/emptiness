@@ -8,7 +8,7 @@
 #include <memory>
 
 #include <system\graphics\ogl\ogl.hpp>
-
+#include <system\graphics\window\window.hpp>
 
 int main( int argc, char * argv [] )
 {
@@ -20,36 +20,27 @@ int main( int argc, char * argv [] )
 
   std::cout << sys::options::parse_options( argc, argv, "shaders" ) << "\n";
 
-  auto ctx = sys::graphics::ogl::make_gl_context();
-  ctx->create().make_current();
+  auto wnd = sys::graphics::window::make_window();
+  wnd->
+    create()
+    .set_size( 600, 500 )
+    .set_position( 100, 100 )
+    .set_title( L"render.window" )
+    .show()
+    ;
 
-  auto ctx2 = sys::graphics::ogl::make_gl_context();
-  ctx2->create().make_current();
+  auto ctx = sys::graphics::ogl::make_gl_context();
+  ctx->create( wnd->get_native_handle() ).make_current();
 
   std::cout << ::glewInit() << "\n";
 
-  std::array<uint8_t, 100> data {};
-  GLuint buffer {};
-
-  ::glGenBuffers( 1, &buffer );
-  ::glBindBuffer( GL_ARRAY_BUFFER, buffer );
-  ::glBufferData( GL_ARRAY_BUFFER, gsl::as_span( data ).size_bytes()
-                  , data.data(), GL_STATIC_DRAW );
-
-  auto map_buffer = []
+  sys::graphics::window::message_loop( [&ctx]
   {
-    auto data_ptr = ::glMapBuffer( GL_ARRAY_BUFFER, GL_READ_WRITE );
-    std::cout << data_ptr << "\n";
-    ::glUnmapBuffer( GL_ARRAY_BUFFER );
-  };
+    ctx->make_current();
+    ::glClearColor( 1, 0.5, ::rand() % 255 / 255., 1 );
+    ::glClear( GL_COLOR_BUFFER_BIT );
+    ctx->swap_buffers();
+  } );
 
-  map_buffer();
-  ctx->make_current();
-  map_buffer();
-  ctx2->make_current();
-  map_buffer();
-
-  //std::getchar();
   return 0;
 }
-
