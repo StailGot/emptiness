@@ -116,12 +116,10 @@ namespace sys
 
   void folder_monitor::notify( double elapsed )
   {
-    //std::cout << "event" << "\n";
-    //std::cout << elapsed << "\n";
-
     uint8_t buffer [2048] = {};
     DWORD n_bytes = 0;
-    ::ReadDirectoryChangesW( _events_handles [change_event], buffer, (DWORD)std::size( buffer ), FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
+    ::ReadDirectoryChangesW( _events_handles [change_event], buffer, (DWORD)std::size( buffer )
+                             , FALSE, FILE_NOTIFY_CHANGE_LAST_WRITE, &n_bytes, nullptr, nullptr );
     FILE_NOTIFY_INFORMATION & info = *(FILE_NOTIFY_INFORMATION*)&buffer;
 
     if (_callback)

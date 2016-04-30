@@ -22,13 +22,25 @@
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{cdde072e-a22f-4b83-89d9-e24325630a0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{777e89c7-8bef-4d50-9d55-5a44678fb00e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="emptiness_pch.cpp">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="folder_monitor.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="options.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="system_utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="gl_utils.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.chrono.cpp">
       <Filter>Source Files\boost</Filter>
@@ -37,15 +49,6 @@
       <Filter>Source Files\boost</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.thread_clock.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_system.error_code.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.auto_timers_construction.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.cpu_timer.cpp">
       <Filter>Source Files\boost</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.cmdline.cpp">
@@ -81,16 +84,19 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.winmain.cpp">
       <Filter>Source Files\boost</Filter>
     </ClCompile>
-    <ClCompile Include="folder_monitor.cpp">
-      <Filter>Source Files\utils</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_system.error_code.cpp">
+      <Filter>Source Files\boost</Filter>
     </ClCompile>
-    <ClCompile Include="options.cpp">
-      <Filter>Source Files\utils</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.auto_timers_construction.cpp">
+      <Filter>Source Files\boost</Filter>
     </ClCompile>
-    <ClCompile Include="system_utils.cpp">
-      <Filter>Source Files\utils</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.cpu_timer.cpp">
+      <Filter>Source Files\boost</Filter>
     </ClCompile>
-    <ClCompile Include="gl_utils.cpp">
+    <ClCompile Include="emptiness_pch.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\packages\glew.1.13.0\lib\native\src\glew.c">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,9 +104,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="emptiness_pch.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="folder_monitor.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="system_utils.hpp">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="emptiness_pch.hpp">
+      <Filter>pch</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

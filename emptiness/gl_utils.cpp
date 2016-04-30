@@ -136,6 +136,7 @@ namespace gl
       | rn::transformed( [] ( auto && f ) { return std::make_pair( detail::read_file_to_string( f.first.string() ), f.second ); } )
       | rn::transformed( [] ( auto && f ) { return create_shader( f.first, f.second.get(), &std::clog );                        } )
       ;
-    return { std::begin( shaders ), std::end( shaders ) };
+    return std::vector<GLenum>{ std::begin( shaders ), std::end( shaders ) };
   }
 }
+
