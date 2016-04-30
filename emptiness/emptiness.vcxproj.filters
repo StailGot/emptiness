@@ -25,6 +25,18 @@
     <Filter Include="pch">
       <UniqueIdentifier>{777e89c7-8bef-4d50-9d55-5a44678fb00e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\system">
+      <UniqueIdentifier>{1411b98f-1a1f-43f0-9d2b-a2c5f9c5e3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system\graphics">
+      <UniqueIdentifier>{c066a9c1-9a42-49e8-9f7e-c1f05d144898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system\graphics\ogl">
+      <UniqueIdentifier>{ed55dd35-42cc-47db-a996-0c95811ba83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\system\graphics\ogl\details">
+      <UniqueIdentifier>{c270c7d7-7f2e-4295-852e-baa73e1640b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,8 +108,11 @@
     <ClCompile Include="emptiness_pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="..\packages\glew.1.13.0\lib\native\src\glew.c">
-      <Filter>Source Files\utils</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\glew.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="system\graphics\ogl\ogl.cpp">
+      <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="emptiness_pch.hpp">
       <Filter>pch</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\graphics.hpp">
+      <Filter>Source Files\system\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\ogl\ogl.hpp">
+      <Filter>Source Files\system\graphics\ogl</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\ogl\detail.hpp">
+      <Filter>Source Files\system\graphics\ogl\details</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
