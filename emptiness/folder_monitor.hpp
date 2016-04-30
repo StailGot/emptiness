@@ -27,6 +27,11 @@ namespace sys {
 
   public:
     folder_monitor() = delete;
+    folder_monitor( const folder_monitor & ) = delete;
+    folder_monitor( folder_monitor && ) = delete;
+    folder_monitor & operator=( folder_monitor && ) = delete;
+    folder_monitor & operator=( const folder_monitor & ) = delete;
+
     folder_monitor( const std::wstring & folder, callback_t callback );
     ~folder_monitor();
 

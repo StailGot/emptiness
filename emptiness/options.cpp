@@ -5,8 +5,7 @@
 #include <boost/program_options/variables_map.hpp>
 
 
-namespace options
-{
+namespace sys{ namespace options {
   std::string parse_options( int argc, char * argv [], const std::string & name )
   {
     namespace po = boost::program_options;
@@ -27,4 +26,4 @@ namespace options
 
     return vm[name].as<std::string>();
   }
-}
+}}

@@ -30,8 +30,12 @@ namespace sys
       std::thread( [this]
     {
       _alive = true;
-      _events_handles [stop_event] = ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
-      _events_handles [change_event] = ::FindFirstChangeNotificationW( _folder.c_str(), true, FILE_NOTIFY_CHANGE_LAST_WRITE );
+      _events_handles [stop_event] = 
+        ::CreateEventEx( nullptr, L"", 0, EVENT_ALL_ACCESS );
+      
+      _events_handles [change_event] = 
+        ::FindFirstChangeNotificationW( _folder.c_str(), true
+                                        , FILE_NOTIFY_CHANGE_LAST_WRITE );
       do_work();
       _alive = false;
     } ).detach();
@@ -78,7 +82,9 @@ namespace sys
 
     while (_alive && stop == false)
     {
-      auto wait_result = ::WaitForMultipleObjects( (DWORD)std::size( _events_handles ), _events_handles, FALSE, INFINITE );
+      auto wait_result = 
+        ::WaitForMultipleObjects( (DWORD)std::size( _events_handles )
+                                  , _events_handles, FALSE, INFINITE );
 
       switch (wait_result)
       {
