@@ -17,7 +17,7 @@ void main()
   // gl_PointSize = max( viewport.x, viewport.y );
   // gl_Position  = vec4( position, 1);
 
-  gl_Position  = position;
+  gl_Position  = position+1 - vec4(1,1,0,0);
   gl_PointSize = 100;
   // gl_Position = vec4( 0, 0, 0, 1);
 
