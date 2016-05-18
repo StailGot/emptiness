@@ -57,9 +57,6 @@
     <ClCompile Include="system_utils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="gl_utils.cpp">
-      <Filter>Source Files\utils</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.chrono.cpp">
       <Filter>Source Files\boost</Filter>
     </ClCompile>
@@ -114,14 +111,17 @@
     <ClCompile Include="emptiness_pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\glew.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="system\graphics\ogl\ogl.cpp">
       <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
     <ClCompile Include="system\graphics\window\window.cpp">
       <Filter>Source Files\system\graphics\window</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\glew.c">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="system\graphics\ogl\gl_utils.cpp">
+      <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

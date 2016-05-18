@@ -6,41 +6,87 @@
 #include <iostream>
 #include <filesystem>
 #include <memory>
+#include <chrono>
+#include <string>
+
+#include <boost\timer\timer.hpp>
 
 #include <system\graphics\ogl\ogl.hpp>
 #include <system\graphics\window\window.hpp>
+#include <system\graphics\ogl\gl_utils.hpp>
+
+#include <concurrent_queue.h>
 
 int main( int argc, char * argv [] )
 {
-  auto path =
-    std::tr2::sys::path( sys::options::parse_options( argc, argv, "shaders" ) );
+  ::setlocale( 0, "" );
 
-  sys::folder_monitor fm { path, [] ( auto && ) { std::cout << 123 << "\n"; } };
-  fm.start();
+  enum class event: uint32_t { on_shader_change };
+  concurrency::concurrent_queue< event > events;
 
-  std::cout << sys::options::parse_options( argc, argv, "shaders" ) << "\n";
+  auto shaders_path = std::tr2::sys::path { sys::options::parse_options( argc, argv, "shaders" ) };
+  auto on_shader_change =
+    [&events] ( const std::wstring & name )
+  {
+    //std::wcout << name << "\n"; 
+    events.push( event::on_shader_change );
+  };
 
-  auto wnd = sys::graphics::window::make_window();
-  wnd->
+  sys::folder_monitor shader_folder_monitor { shaders_path, on_shader_change };
+  shader_folder_monitor.start();
+
+  std::cout << shaders_path << "\n";
+
+  auto window = sys::graphics::window::make_window();
+  window->
     create()
-    .set_size( 600, 500 )
-    .set_position( 100, 100 )
-    .set_title( L"render.window" )
+    .set_title( L"ogl window" )
+    .set_size( 500, 500 )
+    .set_position( 500, 500 )
     .show()
     ;
 
   auto ctx = sys::graphics::ogl::make_gl_context();
-  ctx->create( wnd->get_native_handle() ).make_current();
+  ctx->create( window->get_native_handle() ).make_current();
 
-  std::cout << ::glewInit() << "\n";
+  ::glewInit();
 
-  sys::graphics::window::message_loop( [&ctx]
+  namespace gl = sys::graphics::ogl;
+
+  auto make_shader_program =
+    [&shaders_path]
   {
-    ctx->make_current();
-    ::glClearColor( 1, 0.5, ::rand() % 255 / 255., 1 );
-    ::glClear( GL_COLOR_BUFFER_BIT );
+    auto shaders = gl::load_shaders( shaders_path.string() );
+    return gl::create_program( shaders, &std::cout );
+  };
+
+  GLuint program = make_shader_program();
+
+  ::glEnable( GL_PROGRAM_POINT_SIZE );
+
+  sys::graphics::window::message_loop
+  (
+    [&events, &ctx, &program, &make_shader_program]
+  {
+    GLfloat color [4] = {};
+    ::glClearBufferfv( GL_COLOR, 0, color );
+    ::glUseProgram( program );
+
+    ::glBegin( GL_POINTS );
+    ::glVertex3f( 0, 0, 0 );
+    ::glEnd();
+
     ctx->swap_buffers();
-  } );
+
+    event e = {};
+    if (events.try_pop( e ))
+    {
+      ::glDeleteProgram( program );
+      program = make_shader_program();
+      std::cout << "on_shader_change" << "\n";
+    }
+  }
+  );
 
   return 0;
 }

@@ -1,4 +1,4 @@
-#include "gl_utils.hpp"
+#include <system/graphics/ogl/gl_utils.hpp>
 
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -8,7 +8,7 @@
 #include <fstream>
 #include <filesystem>
 
-namespace gl
+namespace sys{ namespace graphics { namespace ogl
 {
 
   namespace detail
@@ -29,14 +29,14 @@ namespace gl
     if (os)
       switch (::glGetError())
       {
-        case GL_NO_ERROR: break;
-        case GL_INVALID_ENUM: error_message = "GL_INVALID_ENUM"; break;
-        case GL_INVALID_VALUE: error_message = "GL_INVALID_VALUE"; break;
-        case GL_INVALID_OPERATION: error_message = "GL_INVALID_OPERATION"; break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION: error_message = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
-        case GL_OUT_OF_MEMORY: error_message = "GL_OUT_OF_MEMORY"; break;
-        case GL_STACK_UNDERFLOW: error_message = "GL_STACK_UNDERFLOW"; break;
-        case  GL_STACK_OVERFLOW: error_message = "GL_STACK_OVERFLOW"; break;
+        case GL_NO_ERROR                      : break;
+        case GL_INVALID_ENUM                  : error_message = "GL_INVALID_ENUM"; break;
+        case GL_INVALID_VALUE                 : error_message = "GL_INVALID_VALUE"; break;
+        case GL_INVALID_OPERATION             : error_message = "GL_INVALID_OPERATION"; break;
+        case GL_INVALID_FRAMEBUFFER_OPERATION : error_message = "GL_INVALID_FRAMEBUFFER_OPERATION"; break;
+        case GL_OUT_OF_MEMORY                 : error_message = "GL_OUT_OF_MEMORY"; break;
+        case GL_STACK_UNDERFLOW               : error_message = "GL_STACK_UNDERFLOW"; break;
+        case  GL_STACK_OVERFLOW               : error_message = "GL_STACK_OVERFLOW"; break;
       }
 
     if (os && !error_message.empty())
@@ -121,7 +121,7 @@ namespace gl
     }
   }
 
-  std::vector<GLenum> gl::load_shaders( const std::string shaders_path )
+  std::vector<GLenum> load_shaders( const std::string shaders_path )
   {
     auto files = boost::make_iterator_range( std::tr2::sys::directory_iterator { shaders_path }, {} );
 
@@ -138,5 +138,5 @@ namespace gl
       ;
     return std::vector<GLenum>{ std::begin( shaders ), std::end( shaders ) };
   }
-}
 
+}}} // sys::graphics::ogl

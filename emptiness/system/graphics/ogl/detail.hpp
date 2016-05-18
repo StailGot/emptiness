@@ -10,7 +10,7 @@ namespace sys { namespace graphics {  namespace ogl {
   {
     auto hdc = ::GetDC( (HWND)system_window_handle );
 
-    PIXELFORMATDESCRIPTOR pfd {};
+    PIXELFORMATDESCRIPTOR pfd { sizeof pfd };
     ::SetPixelFormat( hdc, ::ChoosePixelFormat( hdc, &pfd ), &pfd );
     
     auto ctx = ::wglCreateContext( hdc );

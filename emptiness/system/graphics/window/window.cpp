@@ -60,7 +60,7 @@ void message_loop()
 void message_loop( std::function<void()> on_idle )
 {
   MSG msg {};
-  while (true)
+  while (msg.message != WM_QUIT)
   {
     if (::PeekMessageW( &msg, {}, {}, {}, TRUE ))
     {
