@@ -54,9 +54,9 @@ int main( int argc, char * argv [] )
   namespace gl = sys::graphics::ogl;
 
   auto make_shader_program =
-    [&shaders_path]
+    [shaders_path = shaders_path.string()]
   {
-    auto shaders = gl::load_shaders( shaders_path.string() );
+    auto shaders = gl::load_shaders( shaders_path );
     return gl::create_program( shaders, &std::cout );
   };
 

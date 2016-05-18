@@ -70,7 +70,7 @@ namespace sys{ namespace graphics { namespace ogl
     GLuint program = ::glCreateProgram();
     for (auto && shader : shaders)
       ::glAttachShader( program, shader )
-      //, ::glDeleteProgram( program )
+      , ::glDeleteShader( shader )
       ;
 
     ::glLinkProgram( program );
