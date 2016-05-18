@@ -16,6 +16,7 @@
 #include <system\graphics\ogl\gl_utils.hpp>
 
 #include <concurrent_queue.h>
+#include <gsl.h>
 
 int main( int argc, char * argv [] )
 {
@@ -64,17 +65,30 @@ int main( int argc, char * argv [] )
 
   ::glEnable( GL_PROGRAM_POINT_SIZE );
 
+  std::vector< glm::vec3 > vertices = { {0,0,0}, {1,0,0}, {0,1,0} };
+  auto data = gsl::as_span( vertices );
+
+  GLuint buffer = {};
+  ::glCreateBuffers( 1, &buffer );
+  ::glNamedBufferData( buffer, data.size_bytes(), data.data(), GL_STATIC_DRAW );
+
+  GLuint vao = {};
+  ::glCreateVertexArrays( 1, &vao );
+  ::glEnableVertexArrayAttrib( vao, 0 );
+  ::glVertexArrayVertexBuffer( vao, 0, buffer, 0, sizeof glm::vec3 );
+  ::glVertexArrayAttribFormat( vao, 0, 3, GL_FLOAT, GL_FALSE, 0 );
+  ::glVertexArrayAttribBinding( vao, 0, 0 );
+
   sys::graphics::window::message_loop
   (
-    [&events, &ctx, &program, &make_shader_program]
+    [&events, &ctx, &program, &make_shader_program, &vertices, &vao]
   {
     GLfloat color [4] = {};
     ::glClearBufferfv( GL_COLOR, 0, color );
     ::glUseProgram( program );
 
-    ::glBegin( GL_POINTS );
-    ::glVertex3f( 0, 0, 0 );
-    ::glEnd();
+    ::glBindVertexArray( vao );
+    ::glDrawArrays( GL_POINTS, 0, (GLsizei)vertices.size() );
 
     ctx->swap_buffers();
 

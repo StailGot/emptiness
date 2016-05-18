@@ -1,5 +1,6 @@
 #version 430
 
+// in layout( location = 0 ) vec3 position;
 in layout( location = 0 ) vec4 position;
 
 out float radius;
@@ -14,9 +15,10 @@ void main()
 {
   // radius = max( min( sin( time * ( pi * 0.3 ) ) * 0.01 * g + 0.2, 0.5 ), 0.1 );
   // gl_PointSize = max( viewport.x, viewport.y );
-  // gl_Position  = position;
+  // gl_Position  = vec4( position, 1);
 
+  gl_Position  = position;
   gl_PointSize = 100;
-  gl_Position = vec4( 0, 0, 0, 1);
+  // gl_Position = vec4( 0, 0, 0, 1);
 
 }

@@ -19,7 +19,7 @@ public:
  virtual that & create      () = 0;
  virtual that & set_size    ( int32_t w, int32_t h ) = 0;
  virtual that & set_position( int32_t x, int32_t y ) = 0;
- virtual that & set_title   ( const std::wstring & title   ) = 0;
+ virtual that & set_title   ( const std::wstring & title ) = 0;
 
 
  virtual that & show        () = 0;
