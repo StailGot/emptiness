@@ -26,12 +26,12 @@ namespace sys { namespace graphics {  namespace ogl {
       return ::wglMakeCurrent( _hdc, _hglrc ), *this;
     }
 
-    that & create() override
+    that & init() override
     {
-      return create( {} );
+      return init( {} );
     }
 
-    that & create( void * system_window_handle ) override
+    that & init( void * system_window_handle ) override
     {
       return
         std::tie( _hdc, _hglrc ) = detail::create_context( system_window_handle )

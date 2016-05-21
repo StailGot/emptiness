@@ -11,26 +11,30 @@ class window : public iwindow
 private:
   using that = iwindow;
 
-  HWND _hwnd;
+  HWND _hwnd = {};
 
 public:
 
-  virtual that & create() override
+  window()
   {
-    return _hwnd = detail::create_window( {}, {}, {}, {}, {} ), *this;
+    init();
   }
+
   virtual that & set_size( int32_t w, int32_t h ) override
   {
     return ::SetWindowPos( _hwnd, {}, {}, {}, w, h, SWP_NOMOVE | SWP_NOZORDER ), *this;
   }
+
   virtual that & set_position( int32_t x, int32_t y ) override
   {
     return ::SetWindowPos( _hwnd, {}, x, y, {}, {}, SWP_NOSIZE | SWP_NOZORDER ), *this;
   }
+
   virtual that & show() override
   {
     return ::ShowWindow( _hwnd, SW_NORMAL ), *this;;
   }
+
   virtual that & hide() override
   {
     return ::ShowWindow( _hwnd, SW_HIDE ), *this;
@@ -45,6 +49,14 @@ public:
   {
     return ::SetWindowText( _hwnd,  title.c_str() ), *this;   
   }
+
+private:
+  
+  virtual that & init() override
+  {
+    return _hwnd = detail::create_window( {}, {}, {}, {}, {} ), *this;
+  }
+
 };
 
 std::unique_ptr<iwindow> make_window()

@@ -12,7 +12,7 @@ namespace sys{ namespace options {
 
     po::options_description desc { "Allowed options" };
     desc.add_options()
-      (name.c_str(), po::value<std::string>()->default_value( "." ), "shaders path")
+      (name.c_str(), po::value<std::string>()->default_value( "shaders" ), "shaders path")
       ;
 
     po::variables_map vm;

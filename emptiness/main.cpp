@@ -40,15 +40,14 @@ int main( int argc, char * argv [] )
 
   auto window = sys::graphics::window::make_window();
   window->
-    create()
-    .set_title( L"ogl window" )
+     set_title( L"ogl window" )
     .set_size( 500, 500 )
     .set_position( 500, 500 )
     .show()
     ;
 
   auto ctx = sys::graphics::ogl::make_gl_context();
-  ctx->create( window->get_native_handle() ).make_current();
+  ctx->init( window->get_native_handle() ).make_current();
 
   ::glewInit();
 
