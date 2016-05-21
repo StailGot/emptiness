@@ -91,7 +91,13 @@ namespace detail{
 
       case WM_MOUSEMOVE :   event = event_t::mouse_move;
                             data.mouse.position = get_point( lparam ); break;
-      
+ 
+      case WM_LBUTTONUP :   event = event_t::mouse_click;
+                            data.mouse.position = get_point( lparam ); break;
+
+      case WM_LBUTTONDOWN : event = event_t::mouse_down;
+                            data.mouse.position = get_point( lparam ); break;
+
       case WM_SIZE      :   event = event_t::resize;
                             data.mouse.position = get_point( lparam ); break;
     }

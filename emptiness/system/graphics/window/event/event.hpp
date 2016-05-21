@@ -10,6 +10,7 @@ enum class event_t : uint32_t
   , close
   , mouse_move
   , mouse_click
+  , mouse_down
   , resize
   , draw
 };

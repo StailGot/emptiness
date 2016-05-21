@@ -123,6 +123,9 @@
     <ClCompile Include="system\graphics\ogl\gl_utils.cpp">
       <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="system\graphics\window\event\event.hpp">
       <Filter>Source Files\system\graphics\window</Filter>
+    </ClInclude>
+    <ClInclude Include="application.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
