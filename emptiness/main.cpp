@@ -5,6 +5,9 @@
 
 #include <iostream>
 
+#include <windows.h>
+
+
 int main( int argc, char * argv [] )
 {
   ::setlocale( 0, "" );
@@ -27,12 +30,19 @@ int main( int argc, char * argv [] )
                    , [&app] ( application_t::event_data_t data )
                     { 
                       if ( data.mouse.button == application_t::event_data_t::mouse_button_t::left )
-                      std::cout 
-                        << data.mouse.position.x 
-                        << " " 
-                        << data.mouse.position.y 
-                        << "\n"
-                        ;
+                      {
+                        app.lock_mouse( true );
+                        std::cout 
+                          << data.mouse.position.x 
+                          << " " 
+                          << data.mouse.position.y 
+                          << "\n"
+                          ;
+                      }
+                      else
+                      {
+                        app.lock_mouse( false );
+                      }
                     } )
 
     .set_sahders_path( shaders_path.string() )

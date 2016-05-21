@@ -64,7 +64,7 @@ void application_t::process_message_loop()
   } );
 }
 
-auto application_t::on_shader_change( const path_t & name )
+void application_t::on_shader_change( const path_t & name )
 {
   _events.push( event::on_shader_change );
 }
@@ -109,10 +109,17 @@ application_t & application_t::draw()
   ::glUseProgram( _program );
 
   ::glBindVertexArray( _vao );
-  ::glDrawArrays( GL_POINTS, 0, (GLsizei)_vertices.size() );
+  ::glDrawArrays( GL_POINTS, 0, static_cast<GLsizei>(_vertices.size()) );
 
   if (_conext)
     _conext->swap_buffers();
+  return *this;
+}
+
+application_t& application_t::lock_mouse( bool lock )
+{
+  if( _window )
+    _window->lock_mouse( lock );
   return *this;
 }
 

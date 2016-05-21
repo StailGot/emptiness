@@ -2,11 +2,9 @@
 
 #include <system\graphics\window\event\event.hpp>
 
-#include <string>
 #include <cstdint>
 #include <memory>
 #include <functional>
-#include <unordered_map>
 
 namespace sys{ namespace graphics{ namespace window {
 
@@ -33,6 +31,8 @@ public:
 
  virtual that & show        () = 0;
  virtual that & hide        () = 0;
+
+ virtual that & lock_mouse( bool lock ) = 0;
 
  virtual that & add_listener ( event_t event, callback_t callback ) = 0;
 

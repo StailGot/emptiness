@@ -1,10 +1,5 @@
 #pragma once
 
-#include <windows.h>
-#include <windowsx.h>
-
-#include <string>
-
 namespace sys{ namespace type {
  
   template<typename T>

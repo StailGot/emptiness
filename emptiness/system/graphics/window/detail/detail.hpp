@@ -12,7 +12,7 @@ namespace sys{ namespace graphics{ namespace window {
 using window_callback_t = LRESULT (_stdcall *) ( HWND, UINT, WPARAM, LPARAM );
 
 namespace detail{
-  auto create_window( std::wstring title, int32_t x, int32_t y, int32_t w, int32_t h, window_callback_t callback )
+  inline auto create_window( std::wstring title, int32_t x, int32_t y, int32_t w, int32_t h, window_callback_t callback )
   {
     constexpr auto class_name = L"render.window.class";
 

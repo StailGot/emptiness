@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include <system\graphics\graphics.hpp>
 #include <system\graphics\window\window.hpp>
 #include <folder_monitor.hpp>
@@ -49,8 +48,9 @@ private:
   void      init_window             ();
   void      process_message_loop    ();
 
-  GLuint    make_shader_program     ( const path_t & shaders_path );
-  auto      on_shader_change        ( const path_t & name );
+  void      on_shader_change        ( const path_t & name );
+  
+  static GLuint    make_shader_program     ( const path_t & shaders_path );
 
 public:
 
@@ -60,7 +60,7 @@ public:
   application_t & init              ();
   application_t & run               ();
   application_t & draw              ();
-
+  application_t & lock_mouse        ( bool lock );
 };
 
 }

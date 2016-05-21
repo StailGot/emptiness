@@ -1,4 +1,4 @@
-#include <system/graphics/ogl/gl_utils.hpp>
+#include "system/graphics/ogl/gl_utils.hpp"
 
 #include <boost/range/adaptor/transformed.hpp>
 #include <boost/algorithm/string/predicate.hpp>
@@ -56,7 +56,7 @@ namespace sys{ namespace graphics { namespace ogl
         if (GLint length = detail::get_iv( shader, GL_INFO_LOG_LENGTH, ::glGetShaderiv ))
         {
           std::vector<GLchar> info_log( length );
-          ::glGetShaderInfoLog( shader, (GLsizei)std::size( info_log ), &length, std::data( info_log ) );
+          ::glGetShaderInfoLog( shader, static_cast<GLsizei>(std::size( info_log )), &length, std::data( info_log ) );
           *os << std::data( info_log ) << "\n";
         }
       ::glDeleteShader( shader );
@@ -81,7 +81,7 @@ namespace sys{ namespace graphics { namespace ogl
         if (GLint length = detail::get_iv( program, GL_INFO_LOG_LENGTH, ::glGetProgramiv ))
         {
           std::vector<GLchar> info_log( length );
-          ::glGetProgramInfoLog( program, (GLsizei)std::size( info_log ), &length, std::data( info_log ) );
+          ::glGetProgramInfoLog( program, static_cast<GLsizei>(std::size( info_log )), &length, std::data( info_log ) );
           *os << std::data( info_log ) << "\n";
         }
       ::glDeleteProgram( program );

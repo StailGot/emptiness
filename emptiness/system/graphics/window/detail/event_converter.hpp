@@ -3,8 +3,6 @@
 #include <windows.h>
 #include <windowsx.h>
 
-#include <string>
-
 #include "strong_type.hpp"
 
 namespace sys{ namespace graphics{ namespace window {
@@ -19,7 +17,7 @@ namespace detail{
   using lparam_t  = struct : newtype<LPARAM> { using newtype<LPARAM>::newtype; };
   using wparam_t  = struct : newtype<WPARAM> { using newtype<WPARAM>::newtype; };
 
-  auto convert_message_data( message_t msg, lparam_t lparam, wparam_t wparam )
+  inline auto convert_message_data( message_t msg, lparam_t lparam, wparam_t wparam )
   {
     auto get_point = []( lparam_t lparam ) -> event_data_t::point2d_t { 
       return {GET_X_LPARAM(lparam.get()), GET_Y_LPARAM(lparam.get()) }; 

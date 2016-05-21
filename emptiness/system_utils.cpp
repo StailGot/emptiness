@@ -3,9 +3,9 @@
 
 namespace system_utils
 {
-  const std::string load_from_resource( const std::string & name )
+  std::string load_from_resource( const std::string & name )
   {
-    auto module = ::GetModuleHandle( NULL );
+    auto module = ::GetModuleHandle(nullptr );
     auto rc = ::FindResourceA( module, name.c_str(), "TEXT" );
     auto rc_data = ::LoadResource( module, rc );
     auto size = ::SizeofResource( module, rc );

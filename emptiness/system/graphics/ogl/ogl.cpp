@@ -18,7 +18,7 @@ namespace sys { namespace graphics {  namespace ogl {
   public:
     ~gl_contex() override
     {
-      destroy();
+      gl_contex::destroy();
     }
 
     that & make_current() override

@@ -1,6 +1,5 @@
 #include "options.hpp"
 
-#include <boost/program_options/cmdline.hpp>
 #include <boost/program_options/parsers.hpp>
 #include <boost/program_options/variables_map.hpp>
 

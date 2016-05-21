@@ -21,8 +21,13 @@ public:
 
   window()
   {
-    init();
+    window::init();
   }
+
+  virtual that & lock_mouse( bool lock ) override
+  {
+    return ::SetCapture( lock ? _hwnd : nullptr ), *this;
+  };
 
   virtual that & set_size( int32_t w, int32_t h ) override
   {
@@ -73,9 +78,8 @@ private:
     using detail::wparam_t;
     using detail::message_t;
 
-
     const auto event_and_data = detail::convert_message_data( message_t{Msg}, lparam_t{lParam}, wparam_t{wParam} );
-    
+
     if( event_and_data.event != event_t::undefined )
       if (auto && callback = get_dispatcher() [event_and_data.event])
         callback( event_and_data );
