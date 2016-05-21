@@ -158,6 +158,9 @@
     <ClInclude Include="system\graphics\window\detail\detail.hpp">
       <Filter>Source Files\system\graphics\window\details</Filter>
     </ClInclude>
+    <ClInclude Include="system\graphics\window\event\event.hpp">
+      <Filter>Source Files\system\graphics\window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="shaders\shaders.rc">

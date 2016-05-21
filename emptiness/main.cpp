@@ -38,13 +38,22 @@ int main( int argc, char * argv [] )
 
   std::cout << shaders_path << "\n";
 
+  using sys::graphics::window::event_t;
+  using sys::graphics::window::event_data_t;
+
   auto window = sys::graphics::window::make_window();
   window->
-     set_title( L"ogl window" )
+    set_title( L"ogl window" )
     .set_size( 500, 500 )
     .set_position( 500, 500 )
     .show()
     ;
+
+  window->add_listener( event_t::close, [] ( event_data_t data )
+  {
+    ::std::cout << "close" << "\n";
+    std::exit( EXIT_SUCCESS );
+  } );
 
   auto ctx = sys::graphics::ogl::make_gl_context();
   ctx->init( window->get_native_handle() ).make_current();
@@ -78,9 +87,7 @@ int main( int argc, char * argv [] )
   ::glVertexArrayAttribFormat( vao, 0, 3, GL_FLOAT, GL_FALSE, 0 );
   ::glVertexArrayAttribBinding( vao, 0, 0 );
 
-  sys::graphics::window::message_loop
-  (
-    [&events, &ctx, &program, &make_shader_program, &vertices, &vao]
+  auto draw = [&]
   {
     GLfloat color [4] = {};
     ::glClearBufferfv( GL_COLOR, 0, color );
@@ -90,13 +97,29 @@ int main( int argc, char * argv [] )
     ::glDrawArrays( GL_POINTS, 0, (GLsizei)vertices.size() );
 
     ctx->swap_buffers();
+  };
 
+  window->add_listener( event_t::resize, [] ( event_data_t data )
+  {
+    ::glViewport( 0, 0, data.size.x, data.size.y );
+  } );
+
+  window->add_listener( event_t::draw, [&draw] ( event_data_t data )
+  {
+     draw();
+  } );
+
+  sys::graphics::window::message_loop
+  (
+    [&events, &program, &make_shader_program, &draw]
+  {
     event e = {};
     if (events.try_pop( e ))
     {
       ::glDeleteProgram( program );
       program = make_shader_program();
       std::cout << "on_shader_change" << "\n";
+      draw();
     }
   }
   );

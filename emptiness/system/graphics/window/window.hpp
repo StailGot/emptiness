@@ -1,17 +1,25 @@
 #pragma once
 
+#include <system\graphics\window\event\event.hpp>
+
 #include <string>
 #include <cstdint>
 #include <memory>
 #include <functional>
+#include <unordered_map>
 
 namespace sys{ namespace graphics{ namespace window {
+
+using event::event_t;
+using event::event_data_t;
 
 class iwindow
 {  
 public:
   using that = iwindow;
+
   using native_handle = void *;
+  using callback_t    = std::function< void ( event_data_t ) >;
 
 public:
   iwindow & operator= (const iwindow &) = delete;
@@ -25,6 +33,8 @@ public:
 
  virtual that & show        () = 0;
  virtual that & hide        () = 0;
+
+ virtual that & add_listener ( event_t event, callback_t callback ) = 0;
 
  virtual native_handle get_native_handle() = 0;
 };

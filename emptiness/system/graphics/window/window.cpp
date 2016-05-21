@@ -1,6 +1,9 @@
 #include "window.hpp"
 #include "detail\detail.hpp"
 
+#include <unordered_map>
+#include <functional>
+
 #include <windows.h>
 #include <windowsx.h>
 
@@ -10,6 +13,7 @@ class window : public iwindow
 {
 private:
   using that = iwindow;
+  using dispatcher_t = std::unordered_map< event_t, callback_t >;
 
   HWND _hwnd = {};
 
@@ -54,7 +58,32 @@ private:
   
   virtual that & init() override
   {
-    return _hwnd = detail::create_window( {}, {}, {}, {}, {} ), *this;
+    return _hwnd = detail::create_window( {}, {}, {}, {}, {}, window_proc ), *this;
+  }
+
+  static dispatcher_t & get_dispatcher()
+  {
+    static dispatcher_t dispatcher;
+    return dispatcher;
+  }
+
+  static  LRESULT _stdcall window_proc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+  {
+    using detail::lparam_t;
+    using detail::wparam_t;
+
+    const auto event_and_data = detail::convert_message_data( Msg, lparam_t{lParam}, wparam_t{wParam} );
+    
+    if( event_and_data.first != event_t::undefined )
+      if (auto && callback = get_dispatcher() [event_and_data.first])
+        callback( /*event_and_data.first,*/ event_and_data.second );
+
+    return ::DefWindowProc( hWnd, Msg, wParam, lParam );
+  }
+
+  virtual that & add_listener( event_t event, callback_t callback ) override
+  {
+    return get_dispatcher()[event] = std::move( callback ), *this;
   }
 
 };
