@@ -74,9 +74,9 @@ private:
 
     const auto event_and_data = detail::convert_message_data( Msg, lparam_t{lParam}, wparam_t{wParam} );
     
-    if( event_and_data.first != event_t::undefined )
-      if (auto && callback = get_dispatcher() [event_and_data.first])
-        callback( event_and_data.second );
+    if( event_and_data.event != event_t::undefined )
+      if (auto && callback = get_dispatcher() [event_and_data.event])
+        callback( event_and_data );
 
     return ::DefWindowProc( hWnd, Msg, wParam, lParam );
   }

@@ -81,8 +81,8 @@ namespace detail{
       return {GET_X_LPARAM(lparam.get()), GET_Y_LPARAM(lparam.get()) }; 
     };
 
-    event_t      event = {};
-    event_data_t data  = {};
+    event_data_t   data  = {};
+    event_t      & event = data.event;
 
     switch ( msg )
     {
@@ -99,9 +99,9 @@ namespace detail{
                             data.mouse.position = get_point( lparam ); break;
 
       case WM_SIZE      :   event = event_t::resize;
-                            data.mouse.position = get_point( lparam ); break;
+                            data.size = get_point( lparam ); break;
     }
-    return std::make_pair(event, data);
+    return data;
   }
 
 } // detail

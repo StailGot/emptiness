@@ -15,13 +15,28 @@ enum class event_t : uint32_t
   , draw
 };
 
-union event_data_t
+struct event_data_t
 {
-  using point2d_t = struct { int32_t x, y; };
-  enum class mouse_button_t : uint8_t { middle, left, right };
+  enum class mouse_button_t: uint8_t
+  {
+    middle, left, right
+  };
+  using point2d_t = struct
+  {
+    int32_t x, y;
+  };
 
-  struct { point2d_t position; mouse_button_t button; } mouse;
-  point2d_t size;
+  event_t event;
+
+  union
+  {
+    struct
+    {
+      point2d_t position; mouse_button_t button;
+    } mouse;
+
+    point2d_t size;
+  };
 };
 
 }}}}
