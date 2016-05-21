@@ -45,20 +45,21 @@ private:
   GLuint _buffer {};
   GLuint _vao {};
 
-  void init_draw_data();
-  void init_window();
-  GLuint make_shader_program( const path_t & shaders_path );
-  void process_message_loop();
-  auto on_shader_change( const path_t & name );
+  void      init_draw_data          ();
+  void      init_window             ();
+  void      process_message_loop    ();
+
+  GLuint    make_shader_program     ( const path_t & shaders_path );
+  auto      on_shader_change        ( const path_t & name );
 
 public:
 
   application_t();
-  application_t & init();
-  application_t & run();
-  application_t & add_listener( event_t event, callback_t callback );
-  application_t & set_sahders_path( const path_t & path );
-  application_t & draw();
+  application_t & add_listener      ( event_t event, callback_t callback );
+  application_t & set_sahders_path  ( const path_t & path );
+  application_t & init              ();
+  application_t & run               ();
+  application_t & draw              ();
 
 };
 

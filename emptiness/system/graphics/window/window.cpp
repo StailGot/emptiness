@@ -76,7 +76,7 @@ private:
     
     if( event_and_data.first != event_t::undefined )
       if (auto && callback = get_dispatcher() [event_and_data.first])
-        callback( /*event_and_data.first,*/ event_and_data.second );
+        callback( event_and_data.second );
 
     return ::DefWindowProc( hWnd, Msg, wParam, lParam );
   }
