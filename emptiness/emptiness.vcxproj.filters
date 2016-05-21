@@ -167,6 +167,12 @@
     <ClInclude Include="application.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="system\graphics\window\detail\event_converter.hpp">
+      <Filter>Source Files\system\graphics\window\details</Filter>
+    </ClInclude>
+    <ClInclude Include="system\graphics\window\detail\strong_type.hpp">
+      <Filter>Source Files\system\graphics\window\details</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="shaders\shaders.rc">

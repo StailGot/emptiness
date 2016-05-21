@@ -71,8 +71,10 @@ private:
   {
     using detail::lparam_t;
     using detail::wparam_t;
+    using detail::message_t;
 
-    const auto event_and_data = detail::convert_message_data( Msg, lparam_t{lParam}, wparam_t{wParam} );
+
+    const auto event_and_data = detail::convert_message_data( message_t{Msg}, lparam_t{lParam}, wparam_t{wParam} );
     
     if( event_and_data.event != event_t::undefined )
       if (auto && callback = get_dispatcher() [event_and_data.event])

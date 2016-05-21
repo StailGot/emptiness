@@ -219,6 +219,8 @@
     <ClInclude Include="system\graphics\ogl\detail.hpp" />
     <ClInclude Include="system\graphics\ogl\ogl.hpp" />
     <ClInclude Include="system\graphics\window\detail\detail.hpp" />
+    <ClInclude Include="system\graphics\window\detail\event_converter.hpp" />
+    <ClInclude Include="system\graphics\window\detail\strong_type.hpp" />
     <ClInclude Include="system\graphics\window\event\event.hpp" />
     <ClInclude Include="system\graphics\window\window.hpp" />
     <ClInclude Include="system_utils.hpp" />
