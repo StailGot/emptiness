@@ -26,6 +26,7 @@ int main( int argc, char * argv [] )
     .add_listener( application_t::event_t::mouse_move
                    , [&app] ( application_t::event_data_t data )
                     { 
+                      if ( data.mouse.button == application_t::event_data_t::mouse_button_t::left )
                       std::cout 
                         << data.mouse.position.x 
                         << " " 

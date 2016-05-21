@@ -19,7 +19,7 @@ struct event_data_t
 {
   enum class mouse_button_t: uint8_t
   {
-    middle, left, right
+    undefined, middle, left, right
   };
   using point2d_t = struct
   {
