@@ -27,7 +27,7 @@ public:
 
   using callback_t   = sys::graphics::window::iwindow::callback_t;
 
-  using path_t       = std::tr2::sys::path;
+  using path_t       = std::experimental::filesystem::path;
 
 private:
 

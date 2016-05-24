@@ -5,16 +5,13 @@
 
 #include <iostream>
 
-#include <windows.h>
-
-
 int main( int argc, char * argv [] )
 {
   ::setlocale( 0, "" );
 
   using application::application_t;
-  auto shaders_path = application_t::path_t { sys::options::parse_options( argc, argv, "shaders" ) };
-  
+  auto shaders_path = application_t::path_t{sys::options::parse_options(argc, argv, "shaders")};
+
   application_t app;
   app
     .init()
