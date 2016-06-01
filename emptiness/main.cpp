@@ -61,6 +61,45 @@ namespace predicate
 
   template<typename T, typename Args>
   constexpr auto all_of_v = all_of< T, Args >::value;
+
+
+namespace
+{
+  template< class Fn >
+  struct _args;
+
+  template< class Fn >
+  struct _args
+  {
+    using type = typename _args< decltype(&Fn::operator()) >::type;
+  };
+
+  template< class Ret, class ... Args >
+  struct _args< Ret( *) (Args...) >
+  {
+    using type = Ret( *)(Args...);
+  };
+
+  template< class C, class Ret, class ... Args >
+  struct _args< Ret( C::* ) (Args...) const >
+  {
+    using type = Ret( *)(Args...);
+  };
+
+  template< class C, class Ret, class ... Args >
+  struct _args< Ret( C::* ) (Args...) >
+  {
+    using type = Ret( *)(Args...);
+  };
+  
+  template<class Fn>
+  auto get_args( Fn && )
+  {
+    return _args<std::decay_t<Fn>>{};
+  }
+}
+
+
 }
 
 namespace containers
