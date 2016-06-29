@@ -3,6 +3,12 @@
 #include <functional>
 #include <tuple>
 #include <vector>
+#include <vector>
+#include <tuple>
+#include <functional>
+#include <iostream>
+#include <algorithm>
+
 
 namespace functional
 {
@@ -108,32 +114,95 @@ namespace containers
   struct list_t;
 }
 
+
+
+namespace ftl
+{
+namespace detail {
+  template< typename ... Fns, typename ...Args, size_t ...I, typename Fn>
+  auto _zip_with( std::tuple<Fns...> fns, std::tuple<Args...> arg, Fn fn, std::index_sequence<I...> )
+  {
+    return std::make_tuple( fn( std::get<I>( fns ), std::get<I>( arg ) )... );
+  }
+}
+
+template< typename FnTuple, typename ArgsTuple, typename Fn>
+auto zip_with( FnTuple fns, ArgsTuple arg, Fn fn )
+{
+  constexpr auto size = (std::min)(std::tuple_size<FnTuple>::value, std::tuple_size<ArgsTuple>::value);
+  return detail::_zip_with( fns, arg, fn, std::make_index_sequence<size>{} );
+}
+
+namespace detail {
+  template<typename Fn, typename ...Args, size_t ...I>
+  auto _apply( Fn fn, std::tuple<Args...> args, std::index_sequence<I...> )
+  {
+    return std::invoke( fn, std::forward<Args>( std::get<I>( args ))...);
+  }
+}
+
+template<typename Fn, typename ...Args>
+auto apply( Fn fn, std::tuple<Args...> args )
+{
+  return detail::_apply( fn, args
+                         , std::make_index_sequence<std::tuple_size< std::tuple<Args...>>::value>{} );
+}
+
+template<typename Fn, typename Arg>
+auto apply( Fn fn, Arg arg )
+{
+  return std::invoke( fn, arg );
+}
+}
+
+
 int main( int argc, char * argv [] )
 {
-  //tests
-  using namespace predicate;
-  using containers::list_t;
-  std::cout << std::boolalpha;
+  {
+    auto fun =
+      [] ( int i, int y )
+    {
+      std::cout << i << " " << y << "\n";
+      return 0;
+    };
 
-  static_assert(any_of_v<int, std::tuple<char, void, int>>, "any_of fail");
-  static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
-  static_assert(all_of_v<int, std::tuple<int, char, int>> == false, "all_of fail");
-  static_assert(any_of_v<double, std::tuple<char, void, int>> == false, "any_of fail");
-  static_assert(any_of_v<double, std::tuple<>> == false, "any_of fail");
-  static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
-  static_assert(all_of_v<int, std::tuple<char>> == false, "all_of fail");
-  static_assert(all_of_v<void, std::tuple<void>>, "all_of fail");
-  static_assert(any_of_v<double, std::tuple<double>>, "any_of fail");
-  static_assert(any_of_v<double, std::tuple<void, void, void, void, double>>, "any_of fail");
-  static_assert(any_of_v<double, std::tuple<double, void, double, void, double>>, "any_of fail");
+    auto fn = [] ( int i )
+    {
+      std::cout << i << "\n";
+      return 0;
+    };
+    auto args = std::make_tuple( std::make_tuple( 10, 50 ), 10, std::make_tuple( 10, 50 ) );
+    auto funs = std::make_tuple( fun, fn, fun );
 
-  static_assert(any_of_v<double, list_t<void, void, void, void, double>>, "any_of fail");
-  static_assert(any_of_v<double, list_t<double>>, "any_of fail");
-  static_assert(any_of_v<double, list_t<char, void, int>> == false, "any_of fail");
-  static_assert(any_of_v<int, list_t<char, void, int>>, "any_of fail");
+    ftl::zip_with( funs, args, [] ( auto && ... args ) { return ftl::apply( args... ); } );
+  }
 
-  std::cout << any_of_v<int, std::tuple<char, void, int>> << "\n"; // true
-  std::cout << all_of_v<int, list_t<int, int, int>> << "\n"; // true
+  {
+    //tests
+    using namespace predicate;
+    using containers::list_t;
+    std::cout << std::boolalpha;
+
+    static_assert(any_of_v<int, std::tuple<char, void, int>>, "any_of fail");
+    static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
+    static_assert(all_of_v<int, std::tuple<int, char, int>> == false, "all_of fail");
+    static_assert(any_of_v<double, std::tuple<char, void, int>> == false, "any_of fail");
+    static_assert(any_of_v<double, std::tuple<>> == false, "any_of fail");
+    static_assert(all_of_v<int, std::tuple<int, int, int>>, "all_of fail");
+    static_assert(all_of_v<int, std::tuple<char>> == false, "all_of fail");
+    static_assert(all_of_v<void, std::tuple<void>>, "all_of fail");
+    static_assert(any_of_v<double, std::tuple<double>>, "any_of fail");
+    static_assert(any_of_v<double, std::tuple<void, void, void, void, double>>, "any_of fail");
+    static_assert(any_of_v<double, std::tuple<double, void, double, void, double>>, "any_of fail");
+
+    static_assert(any_of_v<double, list_t<void, void, void, void, double>>, "any_of fail");
+    static_assert(any_of_v<double, list_t<double>>, "any_of fail");
+    static_assert(any_of_v<double, list_t<char, void, int>> == false, "any_of fail");
+    static_assert(any_of_v<int, list_t<char, void, int>>, "any_of fail");
+
+    std::cout << any_of_v<int, std::tuple<char, void, int>> << "\n"; // true
+    std::cout << all_of_v<int, list_t<int, int, int>> << "\n"; // true
+  }
 
   return 0;
 }
