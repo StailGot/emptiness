@@ -61,20 +61,31 @@ void for_each( node_t::node_ptr & root, const Fn & fn )
       for_each( sibling, fn );
 }
 
-using level = std::tuple<node_t::node_ptr*, node_t::node_ptr*, size_t>;
+using level_t = std::tuple<node_t::node_ptr*, node_t::node_ptr*, size_t>;
 
-template< typename Fn >
-void for_each( node_t::node_ptr & root, std::stack<level> & stack, const Fn & fn )
+
+bool is_valid_level( level_t & level )
 {
-  node_t::node_ptr * next     = &root;
-  node_t::node_ptr * next_top = &root;
-  size_t index = 0;
+  return !!(std::get<0>(level) ? std::get<0>(level) : std::get<1>(level)) ;
+}
 
-  while ( next != nullptr || next_top != nullptr || !stack.empty() )
+
+node_t::node_ptr * get_node_from_level( level_t & level )
+{
+  return std::get<0>(level);
+}
+
+
+level_t get_next_node( level_t & level, std::stack<level_t> & stack )
+{
+  node_t::node_ptr * next;
+  node_t::node_ptr * next_top;
+  size_t index;
+  std::tie( next, next_top, index ) = level;
+
+
+  if ( next != nullptr || next_top != nullptr || !stack.empty() )
   {
-    if ( next && *next )
-      fn( *next );
-
     if ( next && *next && (*next)->_child )
     {
       if ( (*next)->_siblings.size() )
@@ -83,7 +94,7 @@ void for_each( node_t::node_ptr & root, std::stack<level> & stack, const Fn & fn
     }
     else if ( next_top && *next_top && index < (*next_top)->_siblings.size() )
     {
-      auto && node = &(*next_top)->_siblings[index++];
+      node_t::node_ptr * node = &(*next_top)->_siblings[index++];
       if ( node && *node && !(*node)->_siblings.empty() )
         stack.emplace( /*next*/ nullptr, node, 0 );
 
@@ -98,8 +109,10 @@ void for_each( node_t::node_ptr & root, std::stack<level> & stack, const Fn & fn
     {
       next_top = next = nullptr;
     }
-
   }
+
+
+  return level_t{ next, next_top, index };
 }
 
 
@@ -139,6 +152,7 @@ int main()
   add_sibling( start->_child->_child, 303 );
 
   add_sibling( start->_child->_child->_siblings[1], 313 );
+  add_child  ( start->_child->_child->_siblings[1], 3134 );
 
   size_t count = 0;
 
@@ -154,7 +168,18 @@ int main()
 
 
   count = 0;
-  std::stack< btree::lcrs::level > stack;
-  for_each( start, stack, traverse_function );
+  std::stack< btree::lcrs::level_t > stack;
+
+  btree::lcrs::level_t state{ &start, &start, 0};
+
+  while ( is_valid_level(state) )
+  {
+    auto && node = get_node_from_level(state);
+    if( node && *node )
+      traverse_function( *node );
+
+     state = btree::lcrs::get_next_node( state, stack );
+  }
+
   std::cout << "count: " << count << "\n" << "\n";
 }
