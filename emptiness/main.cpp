@@ -64,7 +64,9 @@ void for_each( node_t::node_ptr & root, const Fn & fn )
 using level_t = std::tuple<node_t::node_ptr*, node_t::node_ptr*, size_t>;
 
 
-bool is_valid_level( level_t & level )
+namespace detail{
+
+bool is_valid_level( const level_t & level )
 {
   return !!(std::get<0>(level) ? std::get<0>(level) : std::get<1>(level)) ;
 }
@@ -76,43 +78,87 @@ node_t::node_ptr * get_node_from_level( level_t & level )
 }
 
 
-level_t get_next_node( level_t & level, std::stack<level_t> & stack )
+bool next_sibling( std::stack<level_t> & stack, level_t & level )
 {
+  bool result = false;
+
   node_t::node_ptr * next;
   node_t::node_ptr * next_top;
   size_t index;
   std::tie( next, next_top, index ) = level;
+  //auto [next, next_top, index] = level; // c++17
 
-
-  if ( next != nullptr || next_top != nullptr || !stack.empty() )
+  if ( next_top && *next_top && index < (*next_top)->_siblings.size() )
   {
-    if ( next && *next && (*next)->_child )
-    {
-      if ( (*next)->_siblings.size() )
-        stack.emplace( /*next*/ nullptr, next_top, index );
-      next_top = next = &(*next)->_child;
-    }
-    else if ( next_top && *next_top && index < (*next_top)->_siblings.size() )
-    {
-      node_t::node_ptr * node = &(*next_top)->_siblings[index++];
-      if ( node && *node && !(*node)->_siblings.empty() )
-        stack.emplace( /*next*/ nullptr, node, 0 );
+    node_t::node_ptr * node = &(*next_top)->_siblings[index++];
+    if ( node && *node && !(*node)->_siblings.empty() )
+      stack.emplace( /*next*/ nullptr, node, 0 );
 
-      next = node;
+    next = node;
+    result = true;
+  }
+
+  level = std::tie( next, next_top, index );
+
+  return result;
+}
+
+
+bool next_child( std::stack<level_t> & stack, level_t & level )
+{
+  bool result = false;
+
+  node_t::node_ptr * next;
+  node_t::node_ptr * next_top;
+  size_t index;
+  std::tie( next, next_top, index ) = level;
+  //auto [next, next_top, index] = level; // c++17
+
+  if ( next && *next && (*next)->_child )
+  {
+    if ((*next)->_siblings.size())
+      stack.emplace( /*next*/ nullptr, next_top, index );
+  
+    next_top = next = &(*next)->_child;
+    result = true;
+  }
+
+  level = std::tie( next, next_top, index );
+
+  return result;
+}
+
+} // namespace detail
+
+
+
+level_t & get_next_node( level_t & level, std::stack<level_t> & stack )
+{
+  if ( detail::is_valid_level(level) || !stack.empty() )
+  {
+    if ( detail::next_child(stack, level) )
+    {
+      // empty
+    }
+    else if ( detail::next_sibling(stack, level) )
+    {
+      // empty
     }
     else if ( !stack.empty() )
     {
-      std::tie(next, next_top, index) = stack.top();
+      level = stack.top();
       stack.pop();
+
+      detail::next_sibling( stack, level );
     }
     else
     {
-      next_top = next = nullptr;
+      // end
+      level = {};
     }
   }
 
-
-  return level_t{ next, next_top, index };
+  return level;
 }
 
 
@@ -172,13 +218,14 @@ int main()
 
   btree::lcrs::level_t state{ &start, &start, 0};
 
-  while ( is_valid_level(state) )
+  while (btree::lcrs::detail::is_valid_level(state) )
   {
-    auto && node = get_node_from_level(state);
-    if( node && *node )
+    auto && node = btree::lcrs::detail::get_node_from_level(state);
+    //if( node && *node )
       traverse_function( *node );
 
-     state = btree::lcrs::get_next_node( state, stack );
+    //count ++;
+    state = btree::lcrs::get_next_node( state, stack );
   }
 
   std::cout << "count: " << count << "\n" << "\n";
