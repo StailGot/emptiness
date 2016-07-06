@@ -66,7 +66,7 @@ auto __case_of( std::true_type, T && v, F && f )
 template < typename T  >
 auto __case_of( std::true_type, T && v )
 {
-    //  f(v);
+  //f(v);
 };
 
 template < typename T >
@@ -105,7 +105,7 @@ auto case_of( T v, Fn && ... cases )
   __case_of( std::false_type{}, v, cases... );
 }
 
-void by_float2 ( float i ) { std::cout << i << "\n"; };
+auto by_float2 ( float i )  { std::cout << __func__ << "float" << i << "\n"; };
 
 int main()
 {
@@ -115,16 +115,14 @@ int main()
   auto by_float  = [] ( float i )  { std::cout << __func__ << "float" << i << "\n"; };
 
   float f = 42.5f;
-  case_of( f, by_int, by_double, by_float );
+  case_of( f, by_int, by_double, by_float2 );
   
   double d = 42.5;
   case_of( d, by_int, by_double, by_float );
   
   int i = 42;
   case_of( i, by_int, by_double, by_float );
-  
-  
-  
+    
 
   std::cout << typeid( decltype(domain( by_int ))::type ).name() << "\n";
   std::cout << typeid( decltype(domain( by_float2 ))::type ).name() << "\n";
