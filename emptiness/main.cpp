@@ -39,7 +39,7 @@ auto domain( Fn f )
   , args<decltype(&Fn::operator())> >
 {
   return {};
-};
+}
 
 template < typename Fn >
 auto domain( Fn f ) 
@@ -48,32 +48,32 @@ auto domain( Fn f )
   , args<Fn> >
 {
   return {};
-};
+}
 
 
 template < typename T, typename F, typename ... Fn >
 auto __case_of( std::true_type, T && v, F && f, Fn && ... cases )
 {
   f(v);
-};
+}
 
 template < typename T, typename F >
 auto __case_of( std::true_type, T && v, F && f )
 {
   f(v);
-};
+}
 
 template < typename T  >
 auto __case_of( std::true_type, T && v )
 {
   //f(v);
-};
+}
 
 template < typename T >
 auto __case_of( std::false_type, T v )
 {
   //__case_of( std::true_type{}, v, cases... );
-};
+}
 
 template < typename T >
 using get_type_t = typename T::type;
@@ -88,7 +88,7 @@ auto __case_of( std::false_type, T v, F f, Fn && ... cases )
 >
 {
   __case_of( std::true_type{}, v, f, cases... );
-};
+}
 
 
 template < typename T, typename F, typename ... Fn >
@@ -101,7 +101,7 @@ auto __case_of( std::false_type, T v, F f, Fn && ... cases )
 >
 {
   __case_of( std::false_type{}, v, cases... );
-};
+}
 
 
 template < typename T, typename ... Fn >
@@ -110,7 +110,7 @@ auto case_of( T v, Fn && ... cases )
   __case_of( std::false_type{}, v, cases... );
 }
 
-auto by_float2 ( float i )  { std::cout << __func__ << " float " << i << "\n"; };
+auto by_float2 ( float i )  { std::cout << __func__ << " float " << i << "\n"; }
 
 int main()
 {
