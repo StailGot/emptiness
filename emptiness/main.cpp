@@ -75,11 +75,15 @@ auto __case_of( std::false_type, T v )
   //__case_of( std::true_type{}, v, cases... );
 };
 
+template < typename T >
+using get_type_t = typename T::type;
+
 template < typename T, typename F, typename ... Fn >
 auto __case_of( std::false_type, T v, F f, Fn && ... cases ) 
 -> std::enable_if_t < 
      std::is_same< std::tuple_element_t<0, 
-        typename decltype(domain(f))::type
+        //typename decltype(domain(f))::type
+        get_type_t<decltype(domain(f))>
      >, T>::value == true
 >
 {
@@ -91,7 +95,8 @@ template < typename T, typename F, typename ... Fn >
 auto __case_of( std::false_type, T v, F f, Fn && ... cases ) 
 -> std::enable_if_t < 
      std::is_same< std::tuple_element_t<0, 
-        typename decltype(domain(f))::type
+        //typename decltype(domain(f))::type
+        get_type_t<decltype(domain(f))>
      >, T>::value == false
 >
 {
@@ -105,14 +110,14 @@ auto case_of( T v, Fn && ... cases )
   __case_of( std::false_type{}, v, cases... );
 }
 
-auto by_float2 ( float i )  { std::cout << __func__ << "float" << i << "\n"; };
+auto by_float2 ( float i )  { std::cout << __func__ << " float " << i << "\n"; };
 
 int main()
 {
   
-  auto by_int    = [] ( int i )    { std::cout << __func__ << "int"   << i << "\n"; };
-  auto by_double = [] ( double i ) { std::cout << __func__ << "doube" << i << "\n"; };
-  auto by_float  = [] ( float i )  { std::cout << __func__ << "float" << i << "\n"; };
+  auto by_int    = [] ( int i )    { std::cout << __func__ << " int "   << i << "\n"; };
+  auto by_double = [] ( double i ) { std::cout << __func__ << " doube " << i << "\n"; };
+  auto by_float  = [] ( float i )  { std::cout << __func__ << " float " << i << "\n"; };
 
   float f = 42.5f;
   case_of( f, by_int, by_double, by_float2 );
