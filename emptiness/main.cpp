@@ -29,7 +29,7 @@ struct node_t
 };
 
 
-void add_child( node_t::node_ptr & n, const node_t::value_type & value )
+inline void add_child( node_t::node_ptr & n, const node_t::value_type & value )
 {
   node_t::node_ptr * child = &n->_child;
 
@@ -42,7 +42,7 @@ void add_child( node_t::node_ptr & n, const node_t::value_type & value )
 }
 
 
-void add_sibling( node_t::node_ptr & n, const node_t::value_type & value )
+inline void add_sibling( node_t::node_ptr & n, const node_t::value_type & value )
 {
   n->_siblings.emplace_back( std::make_unique<node_t>(value) );
 }
@@ -66,19 +66,19 @@ using level_t = std::tuple<node_t::node_ptr*, node_t::node_ptr*, size_t>;
 
 namespace detail{
 
-bool is_valid_level( const level_t & level )
+inline bool is_valid_level( const level_t & level )
 {
   return !!(std::get<0>(level) ? std::get<0>(level) : std::get<1>(level)) ;
 }
 
 
-node_t::node_ptr * get_node_from_level( level_t & level )
+inline node_t::node_ptr * get_node_from_level( level_t & level )
 {
   return std::get<0>(level);
 }
 
 
-bool next_sibling( std::stack<level_t> & stack, level_t & level )
+inline bool next_sibling( std::stack<level_t> & stack, level_t & level )
 {
   bool result = false;
 
@@ -100,12 +100,10 @@ bool next_sibling( std::stack<level_t> & stack, level_t & level )
     result = true;
   }
 
-
   return result;
 }
 
-
-bool next_child( std::stack<level_t> & stack, level_t & level )
+__forceinline bool next_child( std::stack<level_t> & stack, level_t & level )
 {
   bool result = false;
 
@@ -126,7 +124,6 @@ bool next_child( std::stack<level_t> & stack, level_t & level )
     result = true;
   }
 
-
   return result;
 }
 
@@ -134,7 +131,7 @@ bool next_child( std::stack<level_t> & stack, level_t & level )
 
 
 
-level_t & get_next_node( level_t & level, std::stack<level_t> & stack )
+inline level_t & get_next_node( level_t & level, std::stack<level_t> & stack )
 {
   if ( detail::is_valid_level(level) || !stack.empty() )
   {
