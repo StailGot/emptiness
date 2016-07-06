@@ -95,10 +95,11 @@ bool next_sibling( std::stack<level_t> & stack, level_t & level )
       stack.emplace( /*next*/ nullptr, node, 0 );
 
     next = node;
+    level = std::tie( next, next_top, index );
+   
     result = true;
   }
 
-  level = std::tie( next, next_top, index );
 
   return result;
 }
@@ -120,10 +121,11 @@ bool next_child( std::stack<level_t> & stack, level_t & level )
       stack.emplace( /*next*/ nullptr, next_top, index );
   
     next_top = next = &(*next)->_child;
+    level = std::tie( next, next_top, index );
+  
     result = true;
   }
 
-  level = std::tie( next, next_top, index );
 
   return result;
 }
