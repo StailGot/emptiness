@@ -3,6 +3,7 @@
 #include <tuple>
 #include <typeinfo>
 
+namespace detail {
 
 template < typename T >
 struct __args;
@@ -102,12 +103,12 @@ auto __case_of( std::false_type, T v, F f, Fn && ... cases )
 {
   __case_of( std::false_type{}, v, cases... );
 }
-
+}
 
 template < typename T, typename ... Fn >
 auto case_of( T v, Fn && ... cases )
 {
-  __case_of( std::false_type{}, v, cases... );
+  detail::__case_of( std::false_type{}, v, cases... );
 }
 
 auto by_float2 ( float i )  { std::cout << __func__ << " float " << i << "\n"; }
@@ -128,10 +129,8 @@ int main()
   int i = 42;
   case_of( i, by_int, by_double, by_float );
     
-
-  std::cout << typeid( decltype(domain( by_int ))::type ).name() << "\n";
-  std::cout << typeid( decltype(domain( by_float2 ))::type ).name() << "\n";
-
+  std::cout << typeid( decltype(detail::domain( by_int ))::type ).name() << "\n";
+  std::cout << typeid( decltype(detail::domain( by_float2 ))::type ).name() << "\n";
 
   return 0;
 }
