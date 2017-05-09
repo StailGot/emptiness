@@ -57,57 +57,6 @@
     <ClCompile Include="system_utils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.chrono.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.process_cpu_clocks.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.thread_clock.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.cmdline.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.config_file.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.convert.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.options_description.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.parsers.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.positional_options.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.split.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.utf8_codecvt_facet.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.value_semantic.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.variables_map.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_program_options.winmain.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_system.error_code.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.auto_timers_construction.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_timer.cpu_timer.cpp">
-      <Filter>Source Files\boost</Filter>
-    </ClCompile>
     <ClCompile Include="emptiness_pch.cpp">
       <Filter>pch</Filter>
     </ClCompile>
@@ -117,14 +66,62 @@
     <ClCompile Include="system\graphics\window\window.cpp">
       <Filter>Source Files\system\graphics\window</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\glew.c">
-      <Filter>Source Files\utils</Filter>
-    </ClCompile>
     <ClCompile Include="system\graphics\ogl\gl_utils.cpp">
       <Filter>Source Files\system\graphics\ogl</Filter>
     </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_chrono-src.chrono.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_chrono-src.process_cpu_clocks.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_chrono-src.thread_clock.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.cmdline.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.config_file.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.convert.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.options_description.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.parsers.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.positional_options.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.split.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.utf8_codecvt_facet.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.value_semantic.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.variables_map.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_program_options-src.winmain.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_system-src.error_code.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_timer-src.auto_timers_construction.cpp">
+      <Filter>Source Files\boost</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\dev\emptiness\emptiness\..\..\lib\native\src\boost_timer-src.cpu_timer.cpp">
+      <Filter>Source Files\boost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
