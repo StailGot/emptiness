@@ -22,32 +22,32 @@
     <ProjectGuid>{70BD5FFB-B920-4C47-BCB7-23EB52C27D20}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>emptiness</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -95,6 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,6 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,6 +123,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +140,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -232,28 +236,28 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\glm.0.9.7.1\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" />
     <Import Project="..\packages\Microsoft.Gsl.0.1.2.1\build\native\Microsoft.Gsl.targets" Condition="Exists('..\packages\Microsoft.Gsl.0.1.2.1\build\native\Microsoft.Gsl.targets')" />
-    <Import Project="..\packages\unofficial-flayan-glew.redist.2.0.0\build\native\unofficial-flayan-glew.redist.targets" Condition="Exists('..\packages\unofficial-flayan-glew.redist.2.0.0\build\native\unofficial-flayan-glew.redist.targets')" />
-    <Import Project="..\packages\unofficial-flayan-glew.2.0.0\build\native\unofficial-flayan-glew.targets" Condition="Exists('..\packages\unofficial-flayan-glew.2.0.0\build\native\unofficial-flayan-glew.targets')" />
-    <Import Project="..\packages\boost.1.64.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.64.0.0\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_timer-src.1.64.0.0\build\native\boost_timer-src.targets" Condition="Exists('..\packages\boost_timer-src.1.64.0.0\build\native\boost_timer-src.targets')" />
-    <Import Project="..\packages\boost_program_options-src.1.64.0.0\build\native\boost_program_options-src.targets" Condition="Exists('..\packages\boost_program_options-src.1.64.0.0\build\native\boost_program_options-src.targets')" />
-    <Import Project="..\packages\boost_chrono-src.1.64.0.0\build\native\boost_chrono-src.targets" Condition="Exists('..\packages\boost_chrono-src.1.64.0.0\build\native\boost_chrono-src.targets')" />
-    <Import Project="..\packages\boost_system-src.1.64.0.0\build\native\boost_system-src.targets" Condition="Exists('..\packages\boost_system-src.1.64.0.0\build\native\boost_system-src.targets')" />
+    <Import Project="..\packages\glm.0.9.9.800\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" />
+    <Import Project="..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets" Condition="Exists('..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets')" />
+    <Import Project="..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets" Condition="Exists('..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets')" />
+    <Import Project="..\packages\boost.1.72.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.72.0.0\build\boost.targets')" />
+    <Import Project="..\packages\boost_chrono-src.1.72.0.0\build\boost_chrono-src.targets" Condition="Exists('..\packages\boost_chrono-src.1.72.0.0\build\boost_chrono-src.targets')" />
+    <Import Project="..\packages\boost_program_options-src.1.72.0.0\build\boost_program_options-src.targets" Condition="Exists('..\packages\boost_program_options-src.1.72.0.0\build\boost_program_options-src.targets')" />
+    <Import Project="..\packages\boost_system-src.1.72.0.0\build\boost_system-src.targets" Condition="Exists('..\packages\boost_system-src.1.72.0.0\build\boost_system-src.targets')" />
+    <Import Project="..\packages\boost_timer-src.1.72.0.0\build\boost_timer-src.targets" Condition="Exists('..\packages\boost_timer-src.1.72.0.0\build\boost_timer-src.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.7.1\build\native\glm.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Gsl.0.1.2.1\build\native\Microsoft.Gsl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Gsl.0.1.2.1\build\native\Microsoft.Gsl.targets'))" />
-    <Error Condition="!Exists('..\packages\unofficial-flayan-glew.redist.2.0.0\build\native\unofficial-flayan-glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.redist.2.0.0\build\native\unofficial-flayan-glew.redist.targets'))" />
-    <Error Condition="!Exists('..\packages\unofficial-flayan-glew.2.0.0\build\native\unofficial-flayan-glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.2.0.0\build\native\unofficial-flayan-glew.targets'))" />
-    <Error Condition="!Exists('..\packages\boost.1.64.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.64.0.0\build\native\boost.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_timer-src.1.64.0.0\build\native\boost_timer-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_timer-src.1.64.0.0\build\native\boost_timer-src.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_program_options-src.1.64.0.0\build\native\boost_program_options-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-src.1.64.0.0\build\native\boost_program_options-src.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_chrono-src.1.64.0.0\build\native\boost_chrono-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_chrono-src.1.64.0.0\build\native\boost_chrono-src.targets'))" />
-    <Error Condition="!Exists('..\packages\boost_system-src.1.64.0.0\build\native\boost_system-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-src.1.64.0.0\build\native\boost_system-src.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9.800\build\native\glm.targets'))" />
+    <Error Condition="!Exists('..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.redist.2.1.0\build\native\unofficial-flayan-glew.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\unofficial-flayan-glew.2.1.0\build\native\unofficial-flayan-glew.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.72.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.72.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_chrono-src.1.72.0.0\build\boost_chrono-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_chrono-src.1.72.0.0\build\boost_chrono-src.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_program_options-src.1.72.0.0\build\boost_program_options-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_program_options-src.1.72.0.0\build\boost_program_options-src.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system-src.1.72.0.0\build\boost_system-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system-src.1.72.0.0\build\boost_system-src.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_timer-src.1.72.0.0\build\boost_timer-src.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_timer-src.1.72.0.0\build\boost_timer-src.targets'))" />
   </Target>
 </Project>

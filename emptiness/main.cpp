@@ -14,7 +14,7 @@ int main( int argc, char * argv [] )
 
   application_t app;
   app
-    .init()
+    //.init()
     .add_listener( application_t::event_t::draw,   [&app] ( ... ) { app.draw(); } )
     .add_listener( application_t::event_t::close,  [&app] ( ... ) { std::exit( EXIT_SUCCESS ); } )
     .add_listener( application_t::event_t::resize

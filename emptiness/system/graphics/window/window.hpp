@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <memory>
 #include <functional>
+#include <string>
 
 namespace sys{ namespace graphics{ namespace window {
 

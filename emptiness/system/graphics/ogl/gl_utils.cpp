@@ -123,9 +123,9 @@ namespace sys{ namespace graphics { namespace ogl
 
   std::vector<GLenum> load_shaders( const std::string shaders_path )
   {
-    auto files = boost::make_iterator_range( std::tr2::sys::directory_iterator { shaders_path }, {} );
+    auto files = boost::make_iterator_range( std::filesystem::directory_iterator { shaders_path }, {} );
 
-    namespace sys = std::tr2::sys;
+    namespace sys = std::filesystem;
     namespace rn = boost::adaptors;
 
     auto shaders = files
